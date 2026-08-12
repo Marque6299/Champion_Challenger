@@ -75,6 +75,10 @@
                 onclick="loadReport(report3, this)">
             B2B Training Grid
         </button>
+        <button class="nav-btn"
+                onclick="loadReport(report4, this)">
+            GET Operations Report
+        </button>
     </div>
 
     <div class="report-container">
@@ -95,6 +99,9 @@
 
         const report3 =
             "https://app.powerbi.com/view?r=eyJrIjoiOWQxMGZlMDAtYzEzZC00MDA4LTkwNDEtNDNmNDBkOTg3ZTI3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
+        
+        const report4 =
+            "https://app.powerbi.com/view?r=eyJrIjoiNjQ3NDM0MDEtMGZjNy00NTgwLTk5MGYtODA4YWYxMWZjZTNiIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
 
         function loadReport(url, button) {
             document.getElementById("reportFrame").src = url;
