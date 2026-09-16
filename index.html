@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Power BI Reports Portal</title>
 
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6978764838614552"
+     crossorigin="anonymous"></script>
+
     <style>
         * {
             margin: 0;
@@ -70,7 +74,14 @@
             padding: 5px;
         }
 
-        /* Navigation */
+        /* Navigation Wrapper */
+        .nav-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
         .nav-menu {
             padding: 10px;
             display: flex;
@@ -82,19 +93,15 @@
             display: flex;
             align-items: center;
             gap: 12px;
-
             width: 100%;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-
             padding: 14px 12px;
             font-size: 14px;
             font-weight: 600;
-
             background: rgba(255,255,255,0.12);
             color: white;
-
             transition: all 0.25s ease;
         }
 
@@ -121,14 +128,69 @@
             display: none;
         }
 
-        /* Main Content */
+        /* Sidebar Footer (Ads & Legal) */
+        .sidebar-footer {
+            padding: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.1);
+        }
+
+        .sidebar.collapsed .sidebar-footer {
+            display: none;
+        }
+
+        /* Sidebar Ad Box - Hidden by default */
+        .sidebar-ad-box {
+            display: none;
+            min-height: 250px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin-bottom: 12px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .legal-links {
+            text-align: center;
+        }
+
+        .legal-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .legal-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Main Content Area */
         .main-content {
             flex: 1;
             background: #f5f5f5;
             height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Banner Ad Container - Hidden by default */
+        .top-ad-banner {
+            display: none;
+            width: 100%;
+            min-height: 90px;
+            background: #fff;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #ddd;
+            overflow: hidden;
         }
 
         .report-container {
+            flex: 1;
             width: 100%;
             height: 100%;
         }
@@ -140,9 +202,8 @@
             background: white;
         }
 
-        /* Mobile */
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-
             .sidebar {
                 position: fixed;
                 left: 0;
@@ -170,50 +231,73 @@
 
         <div class="sidebar-header">
             <span class="sidebar-title">Reports Portal</span>
-
             <button class="toggle-btn" onclick="toggleSidebar()">
                 ☰
             </button>
         </div>
 
-        <div class="nav-menu">
+        <div class="nav-wrapper">
+            <div class="nav-menu">
+                <button class="nav-btn active" onclick="loadReport(report1, this)">
+                    <span class="icon">📊</span>
+                    <span class="text">Champion Challenger</span>
+                </button>
+                <button class="nav-btn" onclick="loadReport(report2, this)">
+                    <span class="icon">📈</span>
+                    <span class="text">Productivity Report</span>
+                </button>
+                <button class="nav-btn" onclick="loadReport(report3, this)">
+                    <span class="icon">📋</span>
+                    <span class="text">B2B Training Grid</span>
+                </button>
+                <button class="nav-btn" onclick="loadReport(report4, this)">
+                    <span class="icon">🎯</span>
+                    <span class="text">GET Dashboard</span>
+                </button>
+                <button class="nav-btn" onclick="loadReport(report5, this)">
+                    <span class="icon">⭐</span>
+                    <span class="text">GET Agent Performance</span>
+                </button>
+            </div>
+        </div>
 
-            <button class="nav-btn active"
-                    onclick="loadReport(report1, this)">
-                <span class="icon">🏆</span>
-                <span class="text">Champion Challenger</span>
-            </button>
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+            <!-- Sidebar Ad Container -->
+            <div id="sidebarAdBox" class="sidebar-ad-box">
+                <ins class="adsbygoogle"
+                     id="sidebarAdIns"
+                     style="display:block"
+                     data-ad-client="ca-pub-6978764838614552"
+                     data-ad-slot="YOUR_SIDEBAR_AD_SLOT_ID"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
 
-            <button class="nav-btn"
-                    onclick="loadReport(report2, this)">
-                <span class="icon">📈</span>
-                <span class="text">Productivity Report</span>
-            </button>
-
-            <button class="nav-btn"
-                    onclick="loadReport(report3, this)">
-                <span class="icon">📋</span>
-                <span class="text">B2B Training Grid</span>
-            </button>
-            
-
-            <button class="nav-btn"
-                    onclick="loadReport(report4, this)">
-                <span class="icon">📊</span>
-                <span class="text">GET Dashboard</span>
-            </button>
-
-            <button class="nav-btn"
-                    onclick="loadReport(report5, this)">
-                <span class="icon">📌</span>
-                <span class="text">GET Agent Performance</span>
-            </button>
-
+            <!-- Mandatory Policy Links -->
+            <div class="legal-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="cookie-policy.html">Cookie Policy</a>
+            </div>
         </div>
     </div>
 
-    <!-- Report Viewer -->
+    <!-- Main Content -->
     <div class="main-content">
+        
+        <!-- Top Banner Container -->
+        <div id="topAdBanner" class="top-ad-banner">
+            <ins class="adsbygoogle"
+                 id="topAdIns"
+                 style="display:block; width: 100%; height: 90px;"
+                 data-ad-client="ca-pub-6978764838614552"
+                 data-ad-slot="YOUR_TOP_AD_SLOT_ID"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <!-- Power BI Report Viewer Container -->
         <div class="report-container">
             <iframe
                 id="reportFrame"
@@ -227,44 +311,92 @@
 </div>
 
 <script>
+    // Power BI Reports URLs
+    const report1 = "https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
+    const report2 = "https://app.powerbi.com/view?r=eyJrIjoiZWUwNDVmMjktZWVjNC00ZDQwLTlhMDctYjhjNzgzOGRmNWYyIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
+    const report3 = "https://app.powerbi.com/view?r=eyJrIjoiOWQxMGZlMDAtYzEzZC00MDA4LTkwNDEtNDNmNDBkOTg3ZTI3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
+    const report4 = "https://app.powerbi.com/view?r=eyJrIjoiNjQ3NDM0MDEtMGZjNy00NTgwLTk5MGYtODA4YWYxMWZjZTNiIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
+    const report5 = "https://app.powerbi.com/view?r=eyJrIjoiODgxNTAyOWEtMDY3Yy00YTYyLWJlZGEtZjRiMjM0NzE5OTM3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
 
-    // Power BI Reports
-
-    const report1 =
-        "https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
-
-    const report2 =
-        "https://app.powerbi.com/view?r=eyJrIjoiZWUwNDVmMjktZWVjNC00ZDQwLTlhMDctYjhjNzgzOGRmNWYyIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
-
-    const report3 =
-        "https://app.powerbi.com/view?r=eyJrIjoiOWQxMGZlMDAtYzEzZC00MDA4LTkwNDEtNDNmNDBkOTg3ZTI3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
-
-    const report4 =
-        "https://app.powerbi.com/view?r=eyJrIjoiNjQ3NDM0MDEtMGZjNy00NTgwLTk5MGYtODA4YWYxMWZjZTNiIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
-    
-    const report5 =
-        "https://app.powerbi.com/view?r=eyJrIjoiODgxNTAyOWEtMDY3Yy00YTYyLWJlZGEtZjRiMjM0NzE5OTM3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
-
-
-    // Report Loader
-
+    // Report Switcher
     function loadReport(url, button) {
-
         document.getElementById("reportFrame").src = url;
-
-        document.querySelectorAll(".nav-btn")
-            .forEach(btn => btn.classList.remove("active"));
-
+        document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
         button.classList.add("active");
     }
 
     // Sidebar Toggle
-
     function toggleSidebar() {
-        document.getElementById("sidebar")
-            .classList.toggle("collapsed");
+        document.getElementById("sidebar").classList.toggle("collapsed");
     }
 
+    // AdSense Render Detection & 2-Minute Hide Timer
+    function monitorAdSlot(insElementId, containerElementId, displayStyle = 'flex') {
+        const insElement = document.getElementById(insElementId);
+        const container = document.getElementById(containerElementId);
+        if (!insElement || !container) return;
+
+        let timerStarted = false;
+
+        function showAdAndStartTimer() {
+            if (timerStarted) return;
+            timerStarted = true;
+
+            // Make container visible when ad renders
+            container.style.display = displayStyle;
+
+            // Automatically hide container after 2 minutes (120,000 ms)
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 120000);
+        }
+
+        // MutationObserver detects AdSense status changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-ad-status') {
+                    const status = insElement.getAttribute('data-ad-status');
+                    if (status === 'filled') {
+                        showAdAndStartTimer();
+                    } else if (status === 'unfilled') {
+                        container.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        observer.observe(insElement, { attributes: true });
+
+        // Backup polling check to detect iframe injection or delayed status attributes
+        const checkInterval = setInterval(() => {
+            const status = insElement.getAttribute('data-ad-status');
+            const hasIframe = insElement.querySelector('iframe') !== null;
+
+            if (status === 'filled' || hasIframe) {
+                showAdAndStartTimer();
+                clearInterval(checkInterval);
+            } else if (status === 'unfilled') {
+                container.style.display = 'none';
+                clearInterval(checkInterval);
+            }
+        }, 1000);
+
+        // Stop polling after 15 seconds if no ad returned
+        setTimeout(() => clearInterval(checkInterval), 15000);
+    }
+
+    // Initialize AdSense and start slot monitoring
+    window.addEventListener('DOMContentLoaded', () => {
+        try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.error("AdSense execution error:", e);
+        }
+
+        monitorAdSlot('topAdIns', 'topAdBanner', 'flex');
+        monitorAdSlot('sidebarAdIns', 'sidebarAdBox', 'flex');
+    });
 </script>
 
 </body>
