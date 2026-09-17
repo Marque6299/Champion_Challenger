@@ -305,7 +305,7 @@
                 <div id="container-540cba52261034bbaf8637eacca3ff18"></div>
 
                 <!-- Method 4: Fallback House Banner for Corporate Environment -->
-                <a id="sidebarFallback" class="fallback-banner" href="/portal/access" target="_blank">
+                <a id="sidebarFallback" class="fallback-banner" href="https://www.profitableratecpmnetwork.com/i76n71tt4k?key=9f561ad0b2d1737046e26658af21fb4d" target="_blank">
                     <div class="fallback-sidebar-content">
                         <span>⚡ Featured Corporate Resource</span>
                         <p style="font-size: 11px; opacity: 0.8;">Explore external productivity suite tools.</p>
@@ -339,7 +339,7 @@
             <script src="https://www.highrevenueformat.com/26b0bacf3996ec36297d14533e17fd7a/invoke.js"></script>
 
             <!-- Method 4: Fallback House Banner for Corporate Environment -->
-            <a id="topFallback" class="fallback-banner" href="/portal/access" target="_blank">
+            <a id="topFallback" class="fallback-banner" href="https://www.profitableratecpmnetwork.com/i76n71tt4k?key=9f561ad0b2d1737046e26658af21fb4d" target="_blank">
                 <div class="fallback-top-content">
                     <span>🚀 Upgrade Your Analytics Workflow — Exclusive Partner Offer</span>
                     <span class="fallback-btn">Check Offer</span>
@@ -377,6 +377,14 @@
 
     // Report Switcher + First-Click Smartlink Trigger
     function loadReport(url, button) {
+        // Log report selection in GA4
+        if (typeof gtag === 'function') {
+            gtag('event', 'select_report', {
+                'report_name': button.innerText.trim()
+            });
+        }
+
+        // Trigger Smartlink on first navigation click
         if (!smartlinkTriggered && SMARTLINK_URL !== "") {
             window.open(SMARTLINK_URL, '_blank');
             smartlinkTriggered = true;
