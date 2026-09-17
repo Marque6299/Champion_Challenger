@@ -3,12 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-adsense-account" content="ca-pub-6978764838614552">
     <title>Power BI Reports Portal</title>
-
-    <!-- Google AdSense Script -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6978764838614552"
-     crossorigin="anonymous"></script>
 
     <style>
         * {
@@ -17,20 +12,17 @@
             box-sizing: border-box;
         }
 
-        html,
-        body {
+        html, body {
             height: 100%;
             font-family: "Segoe UI", Arial, sans-serif;
             overflow: hidden;
         }
 
-        /* Layout */
         .layout {
             display: flex;
             height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 260px;
             background: #0078d4;
@@ -65,7 +57,6 @@
             display: none;
         }
 
-        /* Toggle Button */
         .toggle-btn {
             background: transparent;
             border: none;
@@ -75,7 +66,6 @@
             padding: 5px;
         }
 
-        /* Navigation Wrapper */
         .nav-wrapper {
             flex: 1;
             display: flex;
@@ -129,7 +119,6 @@
             display: none;
         }
 
-        /* Sidebar Footer (Ads & Legal) */
         .sidebar-footer {
             padding: 15px;
             border-top: 1px solid rgba(255,255,255,0.2);
@@ -140,7 +129,7 @@
             display: none;
         }
 
-        /* Sidebar Ad Box - Hidden by default */
+        /* Sidebar Ad Box - Hidden until rendered */
         .sidebar-ad-box {
             display: none;
             min-height: 250px;
@@ -169,7 +158,6 @@
             text-decoration: underline;
         }
 
-        /* Main Content Area */
         .main-content {
             flex: 1;
             background: #f5f5f5;
@@ -178,11 +166,11 @@
             flex-direction: column;
         }
 
-        /* Top Banner Ad Container - Hidden by default */
+        /* Top Ad Banner Container - Hidden until rendered */
         .top-ad-banner {
             display: none;
             width: 100%;
-            min-height: 90px;
+            min-height: 70px;
             background: #fff;
             align-items: center;
             justify-content: center;
@@ -203,7 +191,6 @@
             background: white;
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .sidebar {
                 position: fixed;
@@ -212,11 +199,9 @@
                 z-index: 1000;
                 height: 100vh;
             }
-
             .sidebar.collapsed {
                 width: 0;
             }
-
             .sidebar.collapsed * {
                 display: none;
             }
@@ -229,12 +214,9 @@
 
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-
         <div class="sidebar-header">
             <span class="sidebar-title">Reports Portal</span>
-            <button class="toggle-btn" onclick="toggleSidebar()">
-                ☰
-            </button>
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
         </div>
 
         <div class="nav-wrapper">
@@ -262,20 +244,13 @@
             </div>
         </div>
 
-        <!-- Sidebar Footer -->
         <div class="sidebar-footer">
-            <!-- Sidebar Ad Container -->
+            <!-- Sidebar Adsterra Banner Container -->
             <div id="sidebarAdBox" class="sidebar-ad-box">
-                <ins class="adsbygoogle"
-                     id="sidebarAdIns"
-                     style="display:block"
-                     data-ad-client="ca-pub-6978764838614552"
-                     data-ad-slot="YOUR_SIDEBAR_AD_SLOT_ID"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+                <script async="async" data-cfasync="false" src="https://pl31382642.profitableratecpmnetwork.com/540cba52261034bbaf8637eacca3ff18/invoke.js"></script>
+                <div id="container-540cba52261034bbaf8637eacca3ff18"></div>
             </div>
 
-            <!-- Mandatory Policy Links -->
             <div class="legal-links">
                 <a href="privacy-policy.html">Privacy Policy</a>
                 <a href="terms.html">Terms of Service</a>
@@ -287,18 +262,21 @@
     <!-- Main Content -->
     <div class="main-content">
         
-        <!-- Top Banner Container -->
+        <!-- Top Adsterra 468x60 Banner Container -->
         <div id="topAdBanner" class="top-ad-banner">
-            <ins class="adsbygoogle"
-                 id="topAdIns"
-                 style="display:block; width: 100%; height: 90px;"
-                 data-ad-client="ca-pub-6978764838614552"
-                 data-ad-slot="YOUR_TOP_AD_SLOT_ID"
-                 data-ad-format="horizontal"
-                 data-full-width-responsive="true"></ins>
+            <script>
+            atOptions = {
+                'key' : '26b0bacf3996ec36297d14533e17fd7a',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+            </script>
+            <script src="https://www.highrevenueformat.com/26b0bacf3996ec36297d14533e17fd7a/invoke.js"></script>
         </div>
 
-        <!-- Power BI Report Viewer Container -->
+        <!-- Report Container -->
         <div class="report-container">
             <iframe
                 id="reportFrame"
@@ -311,39 +289,38 @@
 
 </div>
 
+<script src="https://pl31382641.profitableratecpmnetwork.com/e4/a2/ee/e4a2ee47d04e946cbcd6813193d39286.js"></script>
+<script src="https://pl31382644.profitableratecpmnetwork.com/02/95/44/0295444bd8b66bc8a37f3166c953bea4.js"></script>
+
 <script>
-    // Power BI Reports URLs
     const report1 = "https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report2 = "https://app.powerbi.com/view?r=eyJrIjoiZWUwNDVmMjktZWVjNC00ZDQwLTlhMDctYjhjNzgzOGRmNWYyIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report3 = "https://app.powerbi.com/view?r=eyJrIjoiOWQxMGZlMDAtYzEzZC00MDA4LTkwNDEtNDNmNDBkOTg3ZTI3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report4 = "https://app.powerbi.com/view?r=eyJrIjoiNjQ3NDM0MDEtMGZjNy00NTgwLTk5MGYtODA4YWYxMWZjZTNiIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report5 = "https://app.powerbi.com/view?r=eyJrIjoiODgxNTAyOWEtMDY3Yy00YTYyLWJlZGEtZjRiMjM0NzE5OTM3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
 
-    // Report Switcher
     function loadReport(url, button) {
         document.getElementById("reportFrame").src = url;
         document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
         button.classList.add("active");
     }
 
-    // Sidebar Toggle
     function toggleSidebar() {
         document.getElementById("sidebar").classList.toggle("collapsed");
     }
 
-    // AdSense Render Detection & 2-Minute Hide Timer
-    function monitorAdSlot(insElementId, containerElementId, displayStyle = 'flex') {
-        const insElement = document.getElementById(insElementId);
-        const container = document.getElementById(containerElementId);
-        if (!insElement || !container) return;
+    // Adsterra Rendering Monitor & 2-Minute Hide Timer
+    function monitorAdsterraContainer(containerId, displayStyle = 'flex') {
+        const container = document.getElementById(containerId);
+        if (!container) return;
 
         let timerStarted = false;
 
-        function showAdAndStartTimer() {
+        function showContainerAndStartTimer() {
             if (timerStarted) return;
             timerStarted = true;
 
-            // Make container visible when ad renders
+            // Reveal container once Adsterra injects an ad element
             container.style.display = displayStyle;
 
             // Automatically hide container after 2 minutes (120,000 ms)
@@ -352,51 +329,30 @@
             }, 120000);
         }
 
-        // MutationObserver detects AdSense status changes
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'data-ad-status') {
-                    const status = insElement.getAttribute('data-ad-status');
-                    if (status === 'filled') {
-                        showAdAndStartTimer();
-                    } else if (status === 'unfilled') {
-                        container.style.display = 'none';
-                    }
-                }
-            });
+        // Observer listens for dynamic DOM injection inside the container
+        const observer = new MutationObserver(() => {
+            const hasAdContent = container.querySelector('iframe, script, div') !== null;
+            if (hasAdContent) {
+                showContainerAndStartTimer();
+            }
         });
 
-        observer.observe(insElement, { attributes: true });
+        observer.observe(container, { childList: true, subtree: true });
 
-        // Backup polling check to detect iframe injection or delayed status attributes
+        // Polling fallback check
         const checkInterval = setInterval(() => {
-            const status = insElement.getAttribute('data-ad-status');
-            const hasIframe = insElement.querySelector('iframe') !== null;
-
-            if (status === 'filled' || hasIframe) {
-                showAdAndStartTimer();
-                clearInterval(checkInterval);
-            } else if (status === 'unfilled') {
-                container.style.display = 'none';
+            if (container.querySelector('iframe') !== null) {
+                showContainerAndStartTimer();
                 clearInterval(checkInterval);
             }
         }, 1000);
 
-        // Stop polling after 15 seconds if no ad returned
         setTimeout(() => clearInterval(checkInterval), 15000);
     }
 
-    // Initialize AdSense and start slot monitoring
     window.addEventListener('DOMContentLoaded', () => {
-        try {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {
-            console.error("AdSense execution error:", e);
-        }
-
-        monitorAdSlot('topAdIns', 'topAdBanner', 'flex');
-        monitorAdSlot('sidebarAdIns', 'sidebarAdBox', 'flex');
+        monitorAdsterraContainer('topAdBanner', 'flex');
+        monitorAdsterraContainer('sidebarAdBox', 'flex');
     });
 </script>
 
