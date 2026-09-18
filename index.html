@@ -3,450 +3,941 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power BI Reports Portal</title>
+    <title>MIS Digital Transformation Portal</title>
 
-    <!-- Standard Google AdSense Script -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6978764838614552" crossorigin="anonymous"></script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Bulletproof Viewport Fix: Pinned absolute positioning */
         html, body {
-            width: 100vw;
-            height: 100vh;
+            width: 100vw; height: 100vh;
             font-family: "Segoe UI", Arial, sans-serif;
             overflow: hidden; 
-            background: #f5f5f5;
+            background: #f0f2f5;
         }
 
         .layout {
-            position: absolute;
-            inset: 0; /* Equivalent to top:0; right:0; bottom:0; left:0; */
-            display: flex;
-            overflow: hidden;
+            position: absolute; inset: 0;
+            display: flex; overflow: hidden;
         }
 
         /* Sidebar */
         .sidebar {
-            width: 260px;
-            height: 100%;
-            background: #0078d4;
-            color: white;
+            width: 260px; height: 100%;
+            background: #0078d4; color: white;
             transition: width 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             box-shadow: 2px 0 8px rgba(0,0,0,0.15);
             z-index: 10;
         }
-
-        .sidebar.collapsed {
-            width: 70px;
-        }
+        .sidebar.collapsed { width: 70px; }
 
         .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            height: 60px;
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px; height: 60px; flex-shrink: 0;
             border-bottom: 1px solid rgba(255,255,255,0.2);
         }
-
-        .sidebar-title {
-            font-size: 18px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .sidebar.collapsed .sidebar-title {
-            display: none;
-        }
-
+        .sidebar-title { font-size: 17px; font-weight: 600; white-space: nowrap; }
+        .sidebar.collapsed .sidebar-title { display: none; }
         .toggle-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 22px;
-            padding: 5px;
+            background: transparent; border: none; color: white;
+            cursor: pointer; font-size: 22px; padding: 5px;
         }
 
-        /* Fixed 1/3 Height Navigation Container */
+        /* Navigation */
         .nav-wrapper {
-            height: 33.33vh; /* Exactly 1/3 of the viewport height */
-            flex-shrink: 0;
-            overflow-y: auto; /* Scroll if content overflows this 1/3 space */
+            height: 40vh; flex-shrink: 0; overflow-y: auto;
         }
+        .nav-wrapper::-webkit-scrollbar { width: 6px; }
+        .nav-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
 
-        /* Custom Scrollbar for Nav */
-        .nav-wrapper::-webkit-scrollbar {
-            width: 6px;
+        .nav-menu { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+        
+        .nav-section {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+            color: rgba(255,255,255,0.6); padding: 10px 10px 2px 10px; font-weight: 600;
         }
-        .nav-wrapper::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.3);
-            border-radius: 3px;
-        }
-
-        .nav-menu {
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .sidebar.collapsed .nav-section { display: none; }
 
         .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            padding: 14px 12px;
-            font-size: 14px;
-            font-weight: 600;
-            background: rgba(255,255,255,0.12);
-            color: white;
-            transition: all 0.25s ease;
-            flex-shrink: 0;
+            display: flex; align-items: center; gap: 12px;
+            width: 100%; border: none; border-radius: 6px;
+            cursor: pointer; padding: 12px; font-size: 13px; font-weight: 600;
+            background: rgba(255,255,255,0.05); color: white;
+            transition: all 0.2s ease; flex-shrink: 0;
         }
+        .nav-btn:hover { background: rgba(255,255,255,0.15); }
+        .nav-btn.active { background: white; color: #0078d4; }
+        .icon { min-width: 24px; text-align: center; font-size: 16px; }
+        .text { white-space: nowrap; }
+        .sidebar.collapsed .text { display: none; }
 
-        .nav-btn:hover {
-            background: rgba(255,255,255,0.22);
-        }
-
-        .nav-btn.active {
-            background: white;
-            color: #0078d4;
-        }
-
-        .icon {
-            min-width: 24px;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        .text {
-            white-space: nowrap;
-        }
-
-        .sidebar.collapsed .text {
-            display: none;
-        }
-
-        /* The Footer gets all remaining space */
+        /* Sidebar Footer & Ads */
         .sidebar-footer {
-            flex-grow: 1; /* Expands to fill the remaining 2/3 space */
-            display: flex;
-            flex-direction: column;
-            padding: 15px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.1);
-            overflow: hidden;
+            flex-grow: 1; display: flex; flex-direction: column;
+            padding: 15px; border-top: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.1); overflow: hidden;
         }
-
-        .sidebar.collapsed .sidebar-footer {
-            display: none;
-        }
-
-        /* Ad Containers */
+        .sidebar.collapsed .sidebar-footer { display: none; }
         .sidebar-ad-box {
-            flex-grow: 1; /* Stretches dynamically to use all available footer space */
-            position: relative;
-            background: rgba(255,255,255,0.05);
-            border-radius: 4px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-grow: 1; position: relative; background: rgba(255,255,255,0.05);
+            border-radius: 4px; margin-bottom: 12px; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        .banner-ad-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            background: #fff;
-        }
-
-        /* Top and bottom banners */
-        .top-ad-banner, .bottom-ad-banner {
-            height: 90px;
-            width: 100%;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .top-ad-banner { border-bottom: 1px solid #ddd; }
-        .bottom-ad-banner { border-top: 1px solid #ddd; }
-
-        .custom-ad-fallback {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 10px;
-            color: white;
-            z-index: 1;
-        }
-
-        .custom-ad-fallback h4 { font-size: 14px; margin-bottom: 4px; }
-        .custom-ad-fallback p { font-size: 11px; opacity: 0.9; }
-
-        .adsbygoogle {
-            position: relative;
-            z-index: 2;
-        }
-
-        .legal-links {
-            text-align: center;
-            flex-shrink: 0;
-        }
-
+        .legal-links { text-align: center; flex-shrink: 0; }
         .legal-links a {
-            color: rgba(255,255,255,0.7);
-            font-size: 12px;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 5px;
+            color: rgba(255,255,255,0.7); font-size: 11px;
+            text-decoration: none; display: block; margin-bottom: 5px;
         }
-
-        .legal-links a:hover {
-            color: white;
-            text-decoration: underline;
-        }
+        .legal-links a:hover { color: white; text-decoration: underline; }
 
         /* Main Content */
         .main-content {
-            flex: 1;
-            background: #f5f5f5;
-            display: flex;
-            flex-direction: column;
-            min-width: 0; /* Flex layout boundary fix */
+            flex: 1; display: flex; flex-direction: column; min-width: 0;
         }
+        .banner-ad-wrapper { width: 100%; display: flex; justify-content: center; background: #fff; }
+        
+        /* Dynamic Banner Heights (Compact 45px fallback, expands to 90px on Google Ad fill) */
+        .top-ad-banner { height: 45px; width: 100%; position: relative; border-bottom: 1px solid #ddd; transition: height 0.3s ease; }
+        .bottom-ad-banner { height: 45px; width: 100%; position: relative; border-top: 1px solid #ddd; transition: height 0.3s ease; }
+        .banner-filled { height: 90px !important; }
 
-        .report-container {
-            flex: 1;
-            width: 100%;
-            min-height: 0; /* CRITICAL: Prevents iframe from breaking flex boundaries */
-            display: flex;
+        /* Fallback Ad Styling */
+        .custom-ad-fallback {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding: 5px 10px; color: white; z-index: 1;
         }
+        .custom-ad-fallback h4 { font-size: 13px; margin-bottom: 2px; }
+        .custom-ad-fallback p { font-size: 10px; opacity: 0.9; }
+        .adsbygoogle { position: relative; z-index: 2; }
 
+        /* Content Container */
+        .content-container {
+            flex: 1; width: 100%; min-height: 0; display: flex;
+            position: relative;
+        }
         iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: transparent;
-            display: block;
+            width: 100%; height: 100%; border: none; background: transparent; display: block;
         }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: 0;
-                top: 0;
-            }
-            .sidebar.collapsed { width: 0; }
-            .sidebar.collapsed * { display: none; }
+        /* Native Tools UI */
+        #nativeTools {
+            width: 100%; height: 100%; display: none; 
+            padding: 30px; overflow-y: auto; background: #f0f2f5;
+        }
+        
+        .tool-view {
+            display: none; flex-direction: column; width: 100%; max-width: 800px;
+            margin: 0 auto; background: #fff; border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 25px;
+        }
+
+        .tool-header { font-size: 20px; color: #333; margin-bottom: 20px; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
+        
+        .scratchpad { width: 100%; height: 250px; padding: 15px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; resize: none; font-size: 14px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; color: #555; margin-bottom: 5px; font-weight: 600; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        
+        .btn-primary { background: #0078d4; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        .btn-primary:hover { background: #005a9e; }
+        .btn-danger { background: #d13438; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        
+        .timer-display { font-size: 48px; font-weight: bold; color: #333; text-align: center; margin: 30px 0; font-variant-numeric: tabular-nums; }
+        .timer-controls { display: flex; justify-content: center; gap: 15px; }
+        
+        .phonetic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; max-height: 350px; overflow-y: auto; padding-right: 5px; }
+        .phonetic-card { background: #f8f9fa; border: 1px solid #e1e4e8; padding: 8px 12px; border-radius: 4px; display: flex; justify-content: space-between; font-size: 13px; }
+        .phonetic-card span:first-child { font-weight: bold; color: #0078d4; }
+
+        /* ===== Added agent-tool styles ===== */
+        .tool-desc { margin-bottom: 15px; font-size: 13px; color: #666; }
+        .tool-note { background: #fff8e1; border: 1px solid #f0d27a; border-radius: 6px; padding: 9px 12px; font-size: 12.5px; color: #5c4a00; margin-bottom: 14px; }
+        .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
+        .btn-row .btn-primary, .btn-row .btn-danger, .btn-row .btn-ghost { margin-top: 0; }
+        .btn-ghost { background: #fff; color: #0078d4; border: 1px solid #0078d4; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .btn-ghost:hover { background: #e6f2fb; }
+        .counts { font-size: 12px; color: #666; margin: 6px 0 10px; }
+        .timer-status { text-align: center; font-size: 13px; color: #666; margin: -14px 0 18px; min-height: 18px; }
+        .target-row { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; color: #666; margin-bottom: 6px; }
+        .target-row input { width: 90px; padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+
+        .spell-out { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; min-height: 56px; }
+        .spell-chip { display: flex; flex-direction: column; align-items: center; min-width: 58px; padding: 6px 9px; background: #f8f9fa; border: 1px solid #e1e4e8; border-radius: 4px; }
+        .spell-chip b { font-size: 18px; line-height: 1.15; color: #333; }
+        .spell-chip span { font-size: 11px; font-weight: 600; color: #0078d4; }
+        .spell-chip.gap { min-width: 18px; background: none; border: none; }
+        .phonetic-divider { border: none; border-top: 1px solid #e1e4e8; margin: 20px 0 14px; }
+
+        .tabs-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+        .tab-btn { background: #fff; border: 1px solid #b9c5d0; color: #333; padding: 7px 13px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; }
+        .tab-btn[aria-pressed="true"] { background: #0078d4; border-color: #0078d4; color: #fff; }
+        .phrase-list { list-style: none; display: grid; gap: 8px; }
+        .phrase-item { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; width: 100%; text-align: left; font: inherit; font-size: 14px; padding: 10px 13px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; color: #333; cursor: pointer; }
+        .phrase-item:hover { border-color: #0078d4; background: #f3f9fe; }
+        .phrase-item .copy-tag { flex-shrink: 0; font-size: 12px; font-weight: 600; color: #0078d4; }
+
+        .calc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .calc-title { font-size: 15px; color: #333; margin: 4px 0 10px; }
+        .result-box { margin: 6px 0 4px; padding: 12px 14px; background: #f3f9fe; border-left: 4px solid #0078d4; border-radius: 4px; font-size: 13px; color: #444; }
+        .result-box strong { font-size: 22px; color: #222; font-variant-numeric: tabular-nums; }
+        .calc-divider { border: none; border-top: 1px solid #e1e4e8; margin: 22px 0 14px; }
+
+        .tz-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+        .tz-controls .form-group { flex: 1 1 180px; margin-bottom: 0; }
+        .tz-controls .btn-primary { margin-top: 0; }
+        .tz-list { list-style: none; margin-top: 18px; border-top: 1px solid #e1e4e8; }
+        .tz-list li { display: grid; grid-template-columns: 1.3fr 1fr 1.3fr 1fr; gap: 10px; padding: 10px 0; border-bottom: 1px solid #e1e4e8; align-items: center; font-size: 13px; }
+        .tz-name { font-weight: 600; color: #333; }
+        .tz-time { font-weight: 700; font-variant-numeric: tabular-nums; color: #222; }
+        .tz-flag { display: inline-flex; align-items: center; gap: 6px; }
+        .tz-flag i { width: 9px; height: 9px; border-radius: 50%; background: #999; display: inline-block; }
+        .tz-flag.open i { background: #1f9d6b; }
+        .tz-flag.closed i { background: #d9931a; }
+
+        #agentToast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px); background: #222; color: #fff; padding: 9px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 1000; }
+        #agentToast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        @media (max-width: 700px) {
+            #nativeTools { padding: 15px; }
+            .calc-grid { grid-template-columns: 1fr; }
+            .tz-list li { grid-template-columns: 1fr 1fr; row-gap: 2px; }
         }
     </style>
 </head>
 <body>
 
 <div class="layout">
-
-    <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
-            <span class="sidebar-title">Reports Portal</span>
+            <span class="sidebar-title">Operations Portal</span>
             <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
         </div>
 
         <div class="nav-wrapper">
             <div class="nav-menu">
+                <!-- Power BI Reports -->
+                <div class="nav-section">Dashboards</div>
                 <button class="nav-btn active" onclick="loadReport(report1, this)">
                     <span class="icon">📊</span><span class="text">Champion Challenger</span>
                 </button>
                 <button class="nav-btn" onclick="loadReport(report2, this)">
                     <span class="icon">📈</span><span class="text">Productivity Report</span>
                 </button>
-                <button class="nav-btn" onclick="loadReport(report3, this)">
-                    <span class="icon">📋</span><span class="text">B2B Training Grid</span>
-                </button>
-                <button class="nav-btn" onclick="loadReport(report4, this)">
-                    <span class="icon">🎯</span><span class="text">GET Dashboard</span>
-                </button>
                 <button class="nav-btn" onclick="loadReport(report5, this)">
                     <span class="icon">⭐</span><span class="text">GET Agent Performance</span>
+                </button>
+
+                <!-- Native HTML Tools -->
+                <div class="nav-section">Agent Tools</div>
+                <button class="nav-btn" onclick="loadTool('notes', this)">
+                    <span class="icon">📝</span><span class="text">Call Scratchpad</span>
+                </button>
+                <button class="nav-btn" onclick="loadTool('timer', this)">
+                    <span class="icon">⏱️</span><span class="text">AHT Timer</span>
+                </button>
+                <button class="nav-btn" onclick="loadTool('ahtcalc', this)">
+                    <span class="icon">🧮</span><span class="text">AHT Calculator</span>
+                </button>
+                <button class="nav-btn" onclick="loadTool('phrases', this)">
+                    <span class="icon">💬</span><span class="text">Phrase Bank</span>
+                </button>
+                <button class="nav-btn" onclick="loadTool('phonetic', this)">
+                    <span class="icon">🔤</span><span class="text">NATO Phonetic Chart</span>
+                </button>
+                <button class="nav-btn" onclick="loadTool('formatter', this)">
+                    <span class="icon">✒️</span><span class="text">Text Formatter</span>
+                </button>
+                <button class="nav-btn" onclick="loadTool('timezones', this)">
+                    <span class="icon">🌍</span><span class="text">Callback Time Zones</span>
                 </button>
             </div>
         </div>
 
         <div class="sidebar-footer">
-            <!-- Sidebar Ad (Never unloads) -->
-            <div id="sidebarAdBox" class="sidebar-ad-box">
-                <!-- Injected via JS -->
-            </div>
-
+            <div id="sidebarAdBox" class="sidebar-ad-box"></div>
             <div class="legal-links">
+                <a href="#">Powered by MIS Digital</a>
                 <a href="privacy-policy.html">Privacy Policy</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="cookie-policy.html">Cookie Policy</a>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content" id="mainContentArea">
-        
-        <!-- Dynamic Top Ad Wrapper (Script will inject and potentially destroy this) -->
         <div id="topAdWrapper" class="banner-ad-wrapper"></div>
 
-        <!-- Power BI Report Viewer -->
-        <div class="report-container">
-            <iframe
-                id="reportFrame"
-                src="https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D"
-                title="Power BI Report"
-                allowfullscreen>
-            </iframe>
+        <div class="content-container">
+            <iframe id="reportFrame" src="https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D" allowfullscreen></iframe>
+            
+            <div id="nativeTools">
+                
+                <!-- 1. Scratchpad Tool -->
+                <div id="tool-notes" class="tool-view">
+                    <h2 class="tool-header">Quick Call Scratchpad</h2>
+                    <p style="margin-bottom:15px; font-size:13px; color:#666;">Notes auto-save locally to your browser storage.</p>
+                    <div class="tool-note"><strong>Keep it safe:</strong> don't store card numbers, passwords or full ID numbers here. Notes stay in this browser, but a shared computer is not private.</div>
+                    <div class="btn-row">
+                        <button class="btn-ghost" onclick="insertNoteTemplate('standard')">Standard template</button>
+                        <button class="btn-ghost" onclick="insertNoteTemplate('callback')">Callback template</button>
+                        <button class="btn-ghost" onclick="insertNoteTemplate('escalation')">Escalation template</button>
+                        <button class="btn-ghost" onclick="insertNoteTime()">Insert time</button>
+                    </div>
+                    <textarea id="scratchpadInput" class="scratchpad" placeholder="Type customer info, reference numbers, or shorthand notes..."></textarea>
+                    <div class="counts" id="notesCount">0 words, 0 characters</div>
+                    <div class="btn-row">
+                        <button class="btn-primary" onclick="copyNotes()">Copy Notes</button>
+                        <button class="btn-ghost" onclick="downloadNotes()">Download .txt</button>
+                        <button class="btn-danger" onclick="clearNotes()">Clear Notes</button>
+                    </div>
+                </div>
+
+                <!-- 2. AHT Timer Tool -->
+                <div id="tool-timer" class="tool-view">
+                    <h2 class="tool-header">AHT Stopwatch</h2>
+                    <div class="target-row">
+                        <label for="ahtTarget">Target handling threshold (seconds)</label>
+                        <input id="ahtTarget" type="number" min="30" max="7200" step="10" inputmode="numeric" value="490">
+                    </div>
+                    <div class="timer-display" id="stopwatch">00:00:00</div>
+                    <div class="timer-status" id="timerStatus" role="status">Ready</div>
+                    <div class="timer-controls">
+                        <button class="btn-primary" onclick="startTimer()">Start</button>
+                        <button class="btn-primary" style="background:#5c2d91;" onclick="pauseTimer()">Pause</button>
+                        <button class="btn-danger" onclick="resetTimer()">Reset</button>
+                    </div>
+                </div>
+
+                <!-- 3. NATO Phonetic Chart Tool -->
+                <div id="tool-phonetic" class="tool-view">
+                    <h2 class="tool-header">NATO Phonetic Alphabet Lookup</h2>
+                    <p style="margin-bottom:15px; font-size:13px; color:#666;">Standard telephony spelling reference for customer account verification.</p>
+                    <div class="form-group">
+                        <label for="spellInput">Spell it out</label>
+                        <input id="spellInput" class="form-control" type="text" autocomplete="off" maxlength="80" placeholder="For example: maria.santos@example.com">
+                    </div>
+                    <div class="spell-out" id="spellOut" aria-live="polite"></div>
+                    <div class="btn-row"><button class="btn-primary" onclick="copySpelling()">Copy Spelling</button></div>
+                    <hr class="phonetic-divider">
+                    <div class="phonetic-grid" id="phoneticGrid"></div>
+                </div>
+
+                <!-- 5. AHT Calculator Tool -->
+                <div id="tool-ahtcalc" class="tool-view">
+                    <h2 class="tool-header">AHT Calculator</h2>
+                    <p class="tool-desc">Average handle time = (talk + hold + after-call work) ÷ calls. Some teams also count transfer or conference time, so confirm how yours is measured. Results are compared with the target set in the AHT Timer.</p>
+
+                    <h3 class="calc-title">One call</h3>
+                    <div class="calc-grid">
+                        <div class="form-group"><label for="ahtTalk">Talk (seconds)</label><input id="ahtTalk" class="form-control" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+                        <div class="form-group"><label for="ahtHold">Hold (seconds)</label><input id="ahtHold" class="form-control" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+                        <div class="form-group"><label for="ahtAcw">After-call work (seconds)</label><input id="ahtAcw" class="form-control" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+                    </div>
+                    <div class="result-box" id="ahtResult">Enter talk, hold and after-call work times to see the handle time.</div>
+
+                    <hr class="calc-divider">
+
+                    <h3 class="calc-title">Shift average</h3>
+                    <div class="calc-grid">
+                        <div class="form-group"><label for="dayHours">Total handle time (hours)</label><input id="dayHours" class="form-control" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+                        <div class="form-group"><label for="dayMinutes">Plus minutes</label><input id="dayMinutes" class="form-control" type="number" min="0" max="59" inputmode="numeric" placeholder="0"></div>
+                        <div class="form-group"><label for="dayCalls">Calls handled</label><input id="dayCalls" class="form-control" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+                    </div>
+                    <div class="result-box" id="dayResult">Enter your total handle time and the number of calls to see your average.</div>
+                </div>
+
+                <!-- 6. Phrase Bank Tool -->
+                <div id="tool-phrases" class="tool-view">
+                    <h2 class="tool-header">Phrase Bank</h2>
+                    <p class="tool-desc">Pick a category and click a phrase to copy it. Replace anything in [brackets] with your details, and always follow your company's approved scripts and compliance wording.</p>
+                    <div class="tabs-row" id="phraseTabs" role="group" aria-label="Phrase categories"></div>
+                    <ul class="phrase-list" id="phraseList"></ul>
+                </div>
+
+                <!-- 7. Callback Time Zone Tool -->
+                <div id="tool-timezones" class="tool-view">
+                    <h2 class="tool-header">Callback Time Zone Converter</h2>
+                    <p class="tool-desc">Enter a date and time in one zone to see the same moment elsewhere, and whether it falls in typical business hours (9:00 AM to 6:00 PM on a weekday). Confirm the customer's preferred time with them directly.</p>
+                    <div class="tz-controls">
+                        <div class="form-group">
+                            <label for="tzSource">Time entered in</label>
+                            <select id="tzSource" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tzInput">Date and time</label>
+                            <input id="tzInput" class="form-control" type="datetime-local">
+                        </div>
+                        <button class="btn-primary" id="tzNow" type="button">Use current time</button>
+                    </div>
+                    <ul class="tz-list" id="tzResults"></ul>
+                </div>
+
+                <!-- 4. Text Formatter Tool -->
+                <div id="tool-formatter" class="tool-view">
+                    <h2 class="tool-header">Quick Text Case & Cleanup Tool</h2>
+                    <div class="form-group">
+                        <label>Input Text</label>
+                        <textarea id="formatInput" class="scratchpad" style="height: 120px;" placeholder="Paste customer text or notes here..."></textarea>
+                    </div>
+                    <div class="counts" id="formatCount">0 words, 0 characters</div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-primary" onclick="formatText('upper')">UPPERCASE</button>
+                        <button class="btn-primary" onclick="formatText('lower')">lowercase</button>
+                        <button class="btn-primary" onclick="formatText('title')">Title Case</button>
+                        <button class="btn-primary" onclick="formatText('sentence')">Sentence case</button>
+                        <button class="btn-primary" onclick="formatText('trim')">Trim spaces</button>
+                        <button class="btn-primary" onclick="formatText('join')">Join lines</button>
+                        <button class="btn-primary" onclick="copyFormatted()">Copy</button>
+                        <button class="btn-ghost" style="margin-top:10px" onclick="undoFormat()">Undo</button>
+                        <button class="btn-danger" onclick="clearFormatted()">Clear</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <!-- Dynamic Bottom Ad Wrapper (Script will inject and potentially destroy this) -->
         <div id="bottomAdWrapper" class="banner-ad-wrapper"></div>
-
     </div>
-
 </div>
 
+<div id="agentToast" role="status" aria-live="polite"></div>
+
 <script>
+    // --- NAVIGATION & VIEWS ---
     const report1 = "https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report2 = "https://app.powerbi.com/view?r=eyJrIjoiZWUwNDVmMjktZWVjNC00ZDQwLTlhMDctYjhjNzgzOGRmNWYyIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
-    const report3 = "https://app.powerbi.com/view?r=eyJrIjoiOWQxMGZlMDAtYzEzZC00MDA4LTkwNDEtNDNmNDBkOTg3ZTI3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
-    const report4 = "https://app.powerbi.com/view?r=eyJrIjoiNjQ3NDM0MDEtMGZjNy00NTgwLTk5MGYtODA4YWYxMWZjZTNiIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report5 = "https://app.powerbi.com/view?r=eyJrIjoiODgxNTAyOWEtMDY3Yy00YTYyLWJlZGEtZjRiMjM0NzE5OTM3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
 
-    function loadReport(url, button) {
-        document.getElementById("reportFrame").src = url;
+    function setActiveNav(button) {
         document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
         button.classList.add("active");
+    }
+
+    function loadReport(url, button) {
+        document.getElementById("reportFrame").style.display = "block";
+        document.getElementById("nativeTools").style.display = "none";
+        document.getElementById("reportFrame").src = url;
+        setActiveNav(button);
+    }
+
+    function loadTool(toolId, button) {
+        document.getElementById("reportFrame").style.display = "none";
+        document.getElementById("nativeTools").style.display = "block";
+        
+        document.querySelectorAll(".tool-view").forEach(el => el.style.display = "none");
+        document.getElementById("tool-" + toolId).style.display = "flex";
+        
+        setActiveNav(button);
     }
 
     function toggleSidebar() {
         document.getElementById("sidebar").classList.toggle("collapsed");
     }
 
-    // ---------------------------------------------------------
-    // DYNAMIC DOM AD MANAGER
-    // ---------------------------------------------------------
-    const customAdPool = [
-        { title: "MIS Digital Transformation", text: "Automating workflows for a smarter tomorrow.", bg: "linear-gradient(90deg, #1e3c72 0%, #2a5298 100%)" },
-        { title: "Data Analytics Hub", text: "Empowering decisions with real-time insights.", bg: "linear-gradient(90deg, #0052d4 0%, #4364f7 50%, #6fb1fc 100%)" },
-        { title: "Operations Excellence", text: "Driving productivity through innovative toolsets.", bg: "linear-gradient(90deg, #11998e 0%, #38ef7d 100%)" }
-    ];
-
-    function getRandomFallback() {
-        return customAdPool[Math.floor(Math.random() * customAdPool.length)];
+    // --- SCRATCHPAD LOGIC ---
+    const scratchpad = document.getElementById('scratchpadInput');
+    scratchpad.value = localStorage.getItem('agentNotes') || '';
+    scratchpad.addEventListener('input', () => localStorage.setItem('agentNotes', scratchpad.value));
+    function clearNotes() {
+        if(confirm("Clear all notes?")) { scratchpad.value = ''; localStorage.removeItem('agentNotes'); refreshNoteCount(); }
     }
 
-    // Sidebar Ad logic: Injects once, stays forever. NEVER unloads.
+    // --- SHARED HELPERS FOR AGENT TOOLS ---
+    let agentToastTimer;
+    function agentToast(msg) {
+        const el = document.getElementById('agentToast');
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeout(agentToastTimer);
+        agentToastTimer = setTimeout(() => el.classList.remove('show'), 1800);
+    }
+    async function agentCopy(text, msg) {
+        if (!text) { agentToast('Nothing to copy yet'); return; }
+        try {
+            await navigator.clipboard.writeText(text);
+            agentToast(msg || 'Copied');
+        } catch (e) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); agentToast(msg || 'Copied'); }
+            catch (err) { agentToast('Copy failed. Select the text and copy it manually.'); }
+            ta.remove();
+        }
+    }
+    function padTwo(n) { return String(n).padStart(2, '0'); }
+    function mmss(s) { s = Math.max(0, Math.floor(s)); return padTwo(Math.floor(s / 60)) + ':' + padTwo(s % 60); }
+    function countLabel(t) { return (t.trim() ? t.trim().split(/\s+/).length : 0) + ' words, ' + t.length + ' characters'; }
+    function safeGet(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }
+    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+    // --- SCRATCHPAD EXTRAS (templates, copy, download, counts) ---
+    const NOTE_TEMPLATES = {
+        standard: 'Reason for contact:\nVerified by:\nIssue details:\nActions taken:\nResolution:\nFollow-up needed:\n',
+        callback: 'Callback requested for:\nBest number or channel:\nCustomer time zone:\nTopic:\nNotes for next agent:\n',
+        escalation: 'Escalated to:\nReason for escalation:\nSteps already tried:\nCustomer expectation:\nReference no.:\n'
+    };
+    function refreshNoteCount() { document.getElementById('notesCount').textContent = countLabel(scratchpad.value); }
+    function insertNoteText(text) {
+        const multiline = text.indexOf('\n') !== -1;
+        const gap = multiline && scratchpad.value.trim() ? (scratchpad.value.endsWith('\n') ? '\n' : '\n\n') : '';
+        const pos = multiline ? scratchpad.value.length : scratchpad.selectionStart;
+        scratchpad.setRangeText(gap + text, pos, pos, 'end');
+        scratchpad.focus();
+        scratchpad.dispatchEvent(new Event('input'));
+    }
+    function insertNoteTemplate(key) { insertNoteText(NOTE_TEMPLATES[key]); }
+    function insertNoteTime() { insertNoteText('[' + new Date().toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) + '] '); }
+    function copyNotes() { agentCopy(scratchpad.value, 'Notes copied'); }
+    function downloadNotes() {
+        if (!scratchpad.value.trim()) { agentToast('Nothing to download yet'); return; }
+        const d = new Date();
+        const name = 'call-notes-' + d.getFullYear() + '-' + padTwo(d.getMonth() + 1) + '-' + padTwo(d.getDate()) + '.txt';
+        const url = URL.createObjectURL(new Blob([scratchpad.value], { type: 'text/plain' }));
+        const a = document.createElement('a');
+        a.href = url; a.download = name;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    scratchpad.addEventListener('input', refreshNoteCount);
+    refreshNoteCount();
+
+    // --- TIMER LOGIC (clock-based, so it stays accurate when the tab is in the background) ---
+    let timerInterval = null, timerElapsed = 0, timerStartedAt = null;
+    const targetInputEl = document.getElementById('ahtTarget');
+    targetInputEl.value = safeGet('ahtTarget', '490');
+
+    function getTargetSeconds() {
+        const v = parseInt(targetInputEl.value, 10);
+        return v > 0 ? v : 490;
+    }
+    function timerSeconds() {
+        return timerElapsed + (timerStartedAt !== null ? (performance.now() - timerStartedAt) / 1000 : 0);
+    }
+    function updateDisplay() {
+        const total = Math.floor(timerSeconds());
+        const h = Math.floor(total / 3600).toString().padStart(2, '0');
+        const m = Math.floor((total % 3600) / 60).toString().padStart(2, '0');
+        const s = (total % 60).toString().padStart(2, '0');
+        const el = document.getElementById("stopwatch");
+        el.innerText = `${h}:${m}:${s}`;
+        const target = getTargetSeconds();
+        el.style.color = total > target ? "#d13438" : (total >= target * 0.75 ? "#c77c0a" : "#333");
+
+        let label;
+        if (total > target) label = 'Over target';
+        else if (timerStartedAt !== null) label = total >= target * 0.75 ? 'Approaching target' : 'On pace';
+        else label = total > 0 ? 'Paused' : 'Ready';
+        const st = document.getElementById('timerStatus');
+        if (st.textContent !== label) st.textContent = label;
+    }
+    function startTimer() {
+        if (timerStartedAt !== null) return;
+        timerStartedAt = performance.now();
+        timerInterval = setInterval(updateDisplay, 250);
+        updateDisplay();
+    }
+    function pauseTimer() {
+        if (timerStartedAt === null) return;
+        timerElapsed = timerSeconds();
+        timerStartedAt = null;
+        clearInterval(timerInterval);
+        timerInterval = null;
+        updateDisplay();
+    }
+    function resetTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerElapsed = 0;
+        timerStartedAt = null;
+        updateDisplay();
+    }
+    targetInputEl.addEventListener('input', () => {
+        safeSet('ahtTarget', String(getTargetSeconds()));
+        updateDisplay();
+        if (window.updateAgentCalcs) window.updateAgentCalcs();
+    });
+    updateDisplay();
+
+    // --- PHONETIC ALPHABET POPULATION ---
+    const natoAlphabet = [
+        {l: 'A', w: 'Alpha'}, {l: 'B', w: 'Bravo'}, {l: 'C', w: 'Charlie'}, {l: 'D', w: 'Delta'},
+        {l: 'E', w: 'Echo'}, {l: 'F', w: 'Foxtrot'}, {l: 'G', w: 'Golf'}, {l: 'H', w: 'Hotel'},
+        {l: 'I', w: 'India'}, {l: 'J', w: 'Juliett'}, {l: 'K', w: 'Kilo'}, {l: 'L', w: 'Lima'},
+        {l: 'M', w: 'Mike'}, {l: 'N', w: 'November'}, {l: 'O', w: 'Oscar'}, {l: 'P', w: 'Papa'},
+        {l: 'Q', w: 'Quebec'}, {l: 'R', w: 'Romeo'}, {l: 'S', w: 'Sierra'}, {l: 'T', w: 'Tango'},
+        {l: 'U', w: 'Uniform'}, {l: 'V', w: 'Victor'}, {l: 'W', w: 'Whiskey'}, {l: 'X', w: 'X-ray'},
+        {l: 'Y', w: 'Yankee'}, {l: 'Z', w: 'Zulu'}
+    ];
+    const gridEl = document.getElementById('phoneticGrid');
+    natoAlphabet.forEach(item => {
+        gridEl.innerHTML += `<div class="phonetic-card"><span>${item.l}</span> <span>${item.w}</span></div>`;
+    });
+
+    // --- PHONETIC SPELLER (uses the same NATO list as the chart) ---
+    const natoWords = {};
+    natoAlphabet.forEach(item => { natoWords[item.l] = item.w; });
+    const digitWords = { '0': 'Zero', '1': 'One', '2': 'Two', '3': 'Three', '4': 'Four', '5': 'Five', '6': 'Six', '7': 'Seven', '8': 'Eight', '9': 'Niner' };
+    const symbolWords = { '@': 'At', '.': 'Dot', '-': 'Dash', '_': 'Underscore', '#': 'Hash', '/': 'Slash', '+': 'Plus', '&': 'Ampersand', ',': 'Comma', ':': 'Colon' };
+    function spellWord(ch) { return natoWords[ch.toUpperCase()] || digitWords[ch] || symbolWords[ch] || ''; }
+
+    const spellInputEl = document.getElementById('spellInput');
+    const spellOutEl = document.getElementById('spellOut');
+    function renderSpelling() {
+        spellOutEl.replaceChildren();
+        if (!spellInputEl.value.trim()) {
+            const hint = document.createElement('span');
+            hint.style.cssText = 'font-size:13px;color:#666';
+            hint.textContent = 'Type a name, email address or reference code to see it spelled out.';
+            spellOutEl.appendChild(hint);
+            return;
+        }
+        for (const ch of spellInputEl.value) {
+            const chip = document.createElement('div');
+            if (ch === ' ') { chip.className = 'spell-chip gap'; spellOutEl.appendChild(chip); continue; }
+            chip.className = 'spell-chip';
+            const b = document.createElement('b'); b.textContent = ch;
+            const w = document.createElement('span'); w.textContent = spellWord(ch) || '?';
+            chip.append(b, w);
+            spellOutEl.appendChild(chip);
+        }
+    }
+    function copySpelling() {
+        const out = Array.from(spellInputEl.value).map(ch => ch === ' ' ? '(space)' : ch + ' - ' + (spellWord(ch) || ch)).join(', ');
+        agentCopy(out, 'Spelling copied');
+    }
+    spellInputEl.addEventListener('input', renderSpelling);
+    renderSpelling();
+
+    // --- TEXT FORMATTER LOGIC ---
+    let formatPrev = null;
+    const formatInputEl = document.getElementById('formatInput');
+    function updateFormatCount() { document.getElementById('formatCount').textContent = countLabel(formatInputEl.value); }
+    const formatters = {
+        upper: t => t.toUpperCase(),
+        lower: t => t.toLowerCase(),
+        title: t => t.toLowerCase().replace(/(^|[\s\-(\/])(\p{L})/gu, (m, a, b) => a + b.toUpperCase()),
+        sentence: t => t.toLowerCase().replace(/(^\s*|[.!?]\s+|\n\s*)(\p{L})/gu, (m, a, b) => a + b.toUpperCase()),
+        trim: t => t.replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').trim(),
+        join: t => t.replace(/\s*\n+\s*/g, ' ').trim()
+    };
+    function formatText(type) {
+        if (!formatInputEl.value || !formatters[type]) return;
+        formatPrev = formatInputEl.value;
+        formatInputEl.value = formatters[type](formatInputEl.value);
+        updateFormatCount();
+    }
+    function copyFormatted() { agentCopy(formatInputEl.value, 'Text copied'); }
+    function undoFormat() {
+        if (formatPrev === null) { agentToast('Nothing to undo'); return; }
+        formatInputEl.value = formatPrev; formatPrev = null; updateFormatCount();
+    }
+    function clearFormatted() { formatPrev = formatInputEl.value || null; formatInputEl.value = ''; updateFormatCount(); }
+    formatInputEl.addEventListener('input', updateFormatCount);
+    updateFormatCount();
+
+    // --- NEW TOOLS: PHRASE BANK, AHT CALCULATOR, CALLBACK TIME ZONES ---
+    (function () {
+        const $ = (s, r = document) => r.querySelector(s);
+        const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+        /* Phrase bank */
+        const PHRASES = {
+            'Opening': [
+                'Thank you for contacting [Company]. My name is [Name]. How can I help you today?',
+                'Good [morning/afternoon/evening], you\'re through to [Name]. What can I do for you?',
+                'Thanks for reaching out. May I have your full name, please?',
+                'I\'d be glad to look into that. Could you tell me a little more about what\'s happening?',
+                'Thanks for your patience while we get started. Let\'s see what we can sort out.'
+            ],
+            'Empathy': [
+                'I understand how frustrating that must be, and I\'m sorry for the trouble.',
+                'That\'s not the experience we want you to have. Let me see what I can do.',
+                'Thank you for letting me know. I can see why that was a worry.',
+                'I appreciate you explaining that. Let\'s work through it together.',
+                'I\'m sorry this has taken up your time. I\'ll do my best to get it sorted out now.'
+            ],
+            'Hold and waiting': [
+                'May I place you on a brief hold while I check that? It should take about [X] minutes.',
+                'Thank you for holding. I appreciate your patience.',
+                'I\'m still working on this. May I have another minute, or would you prefer a callback?',
+                'I\'m going to review the account notes, so there may be a short pause on my end.',
+                'Sorry to keep you waiting. I have an update for you.'
+            ],
+            'Verification': [
+                'For your security, I need to verify a few details before we go further.',
+                'Could you please confirm the name and email address on the account?',
+                'Thank you, that matches. I\'ve verified your account.',
+                'I\'m not able to share account details until verification is complete. Thank you for understanding.',
+                'To keep your account safe, I will never ask for your full password.'
+            ],
+            'Transfer and escalation': [
+                'I\'m going to transfer you to [team], who can help with this. I\'ll pass along the details so you don\'t have to repeat them.',
+                'This needs a review by a specialist team. I\'ll escalate it now and note everything we\'ve covered.',
+                'Your reference number is [number]. Please keep it in case you need to follow up.',
+                'The team will contact you by [channel] within [timeframe].',
+                'Before I transfer you, is there anything else I can help with?'
+            ],
+            'Closing': [
+                'Is there anything else I can help you with today?',
+                'To recap, I\'ve [action], and the next step is [next step].',
+                'Thank you for your patience today. Take care.',
+                'You may receive a short survey about this conversation. Your feedback helps us improve.',
+                'Thanks for contacting [Company]. Have a great day.'
+            ],
+            'De-escalation': [
+                'I can hear this is really important to you, and I want to get it right.',
+                'Let me make sure I\'ve understood: [summary]. Is that correct?',
+                'Here\'s what I can do right now: [option]. Would that work for you?',
+                'I can\'t change that policy, but here\'s what I can offer instead: [option].',
+                'I\'d like to help. Could we take this one step at a time?'
+            ]
+        };
+        const tabWrap = $('#phraseTabs');
+        const phraseList = $('#phraseList');
+        let activeCat = Object.keys(PHRASES)[0];
+
+        function drawPhrases() {
+            phraseList.replaceChildren();
+            PHRASES[activeCat].forEach(text => {
+                const li = document.createElement('li');
+                const b = document.createElement('button');
+                b.type = 'button'; b.className = 'phrase-item';
+                const t = document.createElement('span'); t.textContent = text;
+                const c = document.createElement('span'); c.className = 'copy-tag'; c.textContent = 'Copy';
+                b.append(t, c);
+                b.addEventListener('click', () => agentCopy(text, 'Phrase copied'));
+                li.appendChild(b);
+                phraseList.appendChild(li);
+            });
+        }
+        Object.keys(PHRASES).forEach(cat => {
+            const b = document.createElement('button');
+            b.type = 'button'; b.className = 'tab-btn'; b.textContent = cat;
+            b.setAttribute('aria-pressed', String(cat === activeCat));
+            b.addEventListener('click', () => {
+                activeCat = cat;
+                $$('.tab-btn', tabWrap).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+                drawPhrases();
+            });
+            tabWrap.appendChild(b);
+        });
+        drawPhrases();
+
+        /* AHT calculator */
+        const num = id => Math.max(0, parseFloat($(id).value) || 0);
+        function compareText(secs) {
+            const t = getTargetSeconds();
+            const d = Math.round(secs - t);
+            if (d === 0) return 'Exactly on the target of ' + t + ' seconds.';
+            return d < 0 ? (-d) + ' seconds under the target of ' + t + ' seconds.' : d + ' seconds over the target of ' + t + ' seconds.';
+        }
+        function showResult(el, secs) {
+            el.replaceChildren();
+            const strong = document.createElement('strong'); strong.textContent = mmss(secs);
+            const rest = document.createElement('div');
+            rest.textContent = Math.round(secs) + ' seconds. ' + compareText(secs);
+            el.append('AHT: ', strong, rest);
+        }
+        function updateAgentCalcs() {
+            const total = num('#ahtTalk') + num('#ahtHold') + num('#ahtAcw');
+            const one = $('#ahtResult');
+            if (total > 0) showResult(one, total);
+            else one.textContent = 'Enter talk, hold and after-call work times to see the handle time.';
+
+            const secs = num('#dayHours') * 3600 + num('#dayMinutes') * 60;
+            const calls = num('#dayCalls');
+            const day = $('#dayResult');
+            if (secs > 0 && calls > 0) showResult(day, secs / calls);
+            else day.textContent = 'Enter your total handle time and the number of calls to see your average.';
+        }
+        window.updateAgentCalcs = updateAgentCalcs;
+        ['#ahtTalk', '#ahtHold', '#ahtAcw', '#dayHours', '#dayMinutes', '#dayCalls'].forEach(id => $(id).addEventListener('input', updateAgentCalcs));
+        updateAgentCalcs();
+
+        /* Callback time zones */
+        const ZONES = [
+            ['Asia/Manila', 'Philippines (Manila)'], ['America/New_York', 'US Eastern'], ['America/Chicago', 'US Central'],
+            ['America/Denver', 'US Mountain'], ['America/Los_Angeles', 'US Pacific'], ['Europe/London', 'United Kingdom'],
+            ['Europe/Berlin', 'Central Europe'], ['Asia/Dubai', 'UAE (Dubai)'], ['Asia/Singapore', 'Singapore'],
+            ['Australia/Sydney', 'Australia (Sydney)']
+        ];
+        const tzSource = $('#tzSource');
+        const tzInput = $('#tzInput');
+        const tzResults = $('#tzResults');
+        ZONES.forEach(([id, label]) => {
+            const o = document.createElement('option'); o.value = id; o.textContent = label; tzSource.appendChild(o);
+        });
+        tzSource.value = 'Asia/Manila';
+
+        const dtfCache = {};
+        function zoneParts(date, tz) {
+            const f = dtfCache[tz] || (dtfCache[tz] = new Intl.DateTimeFormat('en-US', {
+                timeZone: tz, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric',
+                hour: 'numeric', minute: 'numeric', second: 'numeric'
+            }));
+            const o = {};
+            f.formatToParts(date).forEach(p => { if (p.type !== 'literal') o[p.type] = parseInt(p.value, 10); });
+            o.hour = o.hour % 24;
+            return o;
+        }
+        function offsetMs(date, tz) {
+            const o = zoneParts(date, tz);
+            return Date.UTC(o.year, o.month - 1, o.day, o.hour, o.minute, o.second) - date.getTime();
+        }
+        function wallToDate(value, tz) {
+            const bits = value.split('T');
+            if (bits.length !== 2 || !bits[0] || !bits[1]) return null;
+            const [y, m, da] = bits[0].split('-').map(Number);
+            const [h, mi] = bits[1].split(':').map(Number);
+            const guess = Date.UTC(y, m - 1, da, h, mi);
+            const off1 = offsetMs(new Date(guess), tz);
+            let utc = guess - off1;
+            const off2 = offsetMs(new Date(utc), tz);
+            if (off2 !== off1) utc = guess - off2;
+            return new Date(utc);
+        }
+        const toInputValue = o => o.year + '-' + padTwo(o.month) + '-' + padTwo(o.day) + 'T' + padTwo(o.hour) + ':' + padTwo(o.minute);
+        const timeFmt = {}, dateFmt = {};
+        function fmtTime(date, tz) {
+            return (timeFmt[tz] || (timeFmt[tz] = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }))).format(date);
+        }
+        function fmtDate(date, tz) {
+            return (dateFmt[tz] || (dateFmt[tz] = new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short', month: 'short', day: 'numeric' }))).format(date);
+        }
+
+        function renderZones() {
+            tzResults.replaceChildren();
+            const instant = tzInput.value ? wallToDate(tzInput.value, tzSource.value) : null;
+            if (!instant || isNaN(instant)) {
+                const li = document.createElement('li');
+                li.textContent = 'Pick a date and time to see the conversion.';
+                tzResults.appendChild(li);
+                return;
+            }
+            const src = zoneParts(instant, tzSource.value);
+            const srcDay = Date.UTC(src.year, src.month - 1, src.day);
+            ZONES.forEach(([id, label]) => {
+                const p = zoneParts(instant, id);
+                const dayDiff = Math.round((Date.UTC(p.year, p.month - 1, p.day) - srcDay) / 864e5);
+                const weekday = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
+                const weekend = weekday === 0 || weekday === 6;
+                const open = !weekend && p.hour >= 9 && p.hour < 18;
+
+                const li = document.createElement('li');
+                const name = document.createElement('div'); name.className = 'tz-name'; name.textContent = label;
+                const time = document.createElement('div'); time.className = 'tz-time'; time.textContent = fmtTime(instant, id);
+                const date = document.createElement('div');
+                date.textContent = fmtDate(instant, id) + (dayDiff === 0 ? '' : dayDiff > 0 ? ' (next day)' : ' (previous day)');
+                const flag = document.createElement('div');
+                flag.className = 'tz-flag ' + (open ? 'open' : 'closed');
+                const dot = document.createElement('i');
+                const txt = document.createElement('span');
+                txt.textContent = weekend ? 'Weekend' : open ? 'Business hours' : 'Outside 9 to 6';
+                flag.append(dot, txt);
+
+                li.append(name, time, date, flag);
+                tzResults.appendChild(li);
+            });
+        }
+        function setNow() { tzInput.value = toInputValue(zoneParts(new Date(), tzSource.value)); renderZones(); }
+        $('#tzNow').addEventListener('click', setNow);
+        tzInput.addEventListener('input', renderZones);
+        tzSource.addEventListener('change', renderZones);
+        setNow();
+    })();
+
+    // --- EXPANDED UNIQUE LOCAL AD POOL (8 Variations) ---
+    const customAdPool = [
+        { title: "MIS Digital Transformation", text: "Automating internal operational workflows." },
+        { title: "Data Analytics Hub", text: "Empowering decisions with live BI metrics." },
+        { title: "Operations Excellence", text: "Driving agent productivity through tooling." },
+        { title: "Knowledge Base Portal", text: "Access internal guides and quick references." },
+        { title: "Agent Support & Resources", text: "Streamlining daily queue handling processes." },
+        { title: "Quality Assurance Tips", text: "Best practices for top scorecard tiers." },
+        { title: "Automation Initiative", text: "Building robust scripts for smart tracking." },
+        { title: "Performance Insight Center", text: "Monitor KPIs securely in real-time." }
+    ];
+
+    let adPoolCursor = Math.floor(Math.random() * customAdPool.length);
+    function getUniqueFallback() {
+        const ad = customAdPool[adPoolCursor % customAdPool.length];
+        adPoolCursor++; // Ensures subsequent containers pull different ads
+        return ad;
+    }
+
+    // --- SIDEBAR AD (Stays fixed) ---
     function initializeSidebarAd() {
         const container = document.getElementById('sidebarAdBox');
-        if (!container) return;
-
-        const ad = getRandomFallback();
+        const ad = getUniqueFallback();
         container.innerHTML = `
-            <div class="custom-ad-fallback" style="background: ${ad.bg}">
+            <div class="custom-ad-fallback" style="background: linear-gradient(135deg, #0078d4, #005a9e);">
                 <h4>⚡ ${ad.title}</h4><p>${ad.text}</p>
             </div>
-            <ins class="adsbygoogle"
-                style="display:inline-block; width:100%; height:100%; min-height:250px;"
-                data-ad-client="ca-pub-6978764838614552"
-                data-ad-slot="9156007073"
-                data-ad-format="vertical"></ins>
+            <ins class="adsbygoogle" style="display:inline-block; width:100%; height:100%; min-height:250px;" data-ad-client="ca-pub-6978764838614552" data-ad-slot="9156007073" data-ad-format="vertical"></ins>
         `;
-
         const insTag = container.querySelector('ins.adsbygoogle');
         const fallback = container.querySelector('.custom-ad-fallback');
-
         const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'data-ad-status' && insTag.getAttribute('data-ad-status') === 'filled') {
-                    if(fallback) fallback.remove(); // Ad loaded, remove fallback layer
-                    observer.disconnect();
-                }
-            });
+            mutations.forEach((m) => { if (m.attributeName === 'data-ad-status' && insTag.getAttribute('data-ad-status') === 'filled') { if(fallback) fallback.remove(); observer.disconnect(); } });
         });
-
         observer.observe(insTag, { attributes: true });
         try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
     }
 
-    // Banner Ad Logic (Top/Bottom): Injects into DOM, completely DESTROYS the DOM element if not filled in 10s.
+    // --- BANNER ADS WITH 10-SECOND RULE (Compact 45px -> Expands to 90px on Google Fill, or Unloads) ---
     function mountVolatileBanner(wrapperId, adSlot, className) {
         const wrapper = document.getElementById(wrapperId);
         if (!wrapper) return;
-
-        // 1. Dynamically create the ad structure
-        const ad = getRandomFallback();
+        
+        const ad = getUniqueFallback();
         const bannerHtml = document.createElement('div');
         bannerHtml.className = className;
         bannerHtml.innerHTML = `
-            <div class="custom-ad-fallback" style="background: ${ad.bg}">
+            <div class="custom-ad-fallback" style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
                 <h4>⚡ ${ad.title}</h4>
+                <p>${ad.text}</p>
             </div>
-            <ins class="adsbygoogle"
-                style="display:inline-block; width:100%; height:90px;"
-                data-ad-client="ca-pub-6978764838614552"
-                data-ad-slot="${adSlot}"
-                data-ad-format="horizontal"></ins>
+            <ins class="adsbygoogle" style="display:inline-block; width:100%; height:100%;" data-ad-client="ca-pub-6978764838614552" data-ad-slot="${adSlot}" data-ad-format="horizontal"></ins>
         `;
         wrapper.appendChild(bannerHtml);
-
         const insTag = bannerHtml.querySelector('ins.adsbygoogle');
         const fallback = bannerHtml.querySelector('.custom-ad-fallback');
         let isFilled = false;
-
-        // 2. Watch for AdSense to fill
+        
         const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'data-ad-status' && insTag.getAttribute('data-ad-status') === 'filled') {
-                    isFilled = true;
-                    if (fallback) fallback.remove(); 
-                }
+            mutations.forEach((m) => { 
+                if (m.attributeName === 'data-ad-status' && insTag.getAttribute('data-ad-status') === 'filled') { 
+                    isFilled = true; 
+                    if(fallback) fallback.remove(); 
+                    // Expand banner height from 45px to full 90px when Google ad arrives
+                    bannerHtml.classList.add('banner-filled');
+                } 
             });
         });
-        
         observer.observe(insTag, { attributes: true });
         try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
 
-        // 3. The 10-Second Unload Script: Completely removes the element from the DOM structure
+        // 10-Second Rule: If Google Ad doesn't fill within 10s, completely destroy the wrapper to reclaim space
         setTimeout(() => {
-            if (!isFilled) {
-                observer.disconnect();
-                wrapper.remove(); // Completely destroys the wrapper, reclaiming the space natively
+            if (!isFilled) { 
+                observer.disconnect(); 
+                wrapper.remove(); // Unloads wrapper from DOM completely
             }
         }, 10000);
     }
 
-    // Initialize all ads
     window.addEventListener('DOMContentLoaded', () => {
         initializeSidebarAd();
         mountVolatileBanner('topAdWrapper', '1577347061', 'top-ad-banner');
         mountVolatileBanner('bottomAdWrapper', '9541440879', 'bottom-ad-banner');
     });
-
 </script>
 
 </body>
