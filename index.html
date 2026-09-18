@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Power BI Reports Portal</title>
 
+    <!-- Standard Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6978764838614552" crossorigin="anonymous"></script>
+
     <style>
         * {
             margin: 0;
@@ -12,28 +15,33 @@
             box-sizing: border-box;
         }
 
+        /* Bulletproof Viewport Fix: Pinned absolute positioning */
         html, body {
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             font-family: "Segoe UI", Arial, sans-serif;
-            overflow: hidden;
+            overflow: hidden; 
+            background: #f5f5f5;
         }
 
-        /* Layout */
         .layout {
+            position: absolute;
+            inset: 0; /* Equivalent to top:0; right:0; bottom:0; left:0; */
             display: flex;
-            height: 100vh;
+            overflow: hidden;
         }
 
         /* Sidebar */
         .sidebar {
             width: 260px;
+            height: 100%;
             background: #0078d4;
             color: white;
             transition: width 0.3s ease;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+            z-index: 10;
         }
 
         .sidebar.collapsed {
@@ -45,7 +53,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 15px;
-            min-height: 60px;
+            height: 60px;
+            flex-shrink: 0;
             border-bottom: 1px solid rgba(255,255,255,0.2);
         }
 
@@ -68,11 +77,20 @@
             padding: 5px;
         }
 
+        /* Fixed 1/3 Height Navigation Container */
         .nav-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
+            height: 33.33vh; /* Exactly 1/3 of the viewport height */
+            flex-shrink: 0;
+            overflow-y: auto; /* Scroll if content overflows this 1/3 space */
+        }
+
+        /* Custom Scrollbar for Nav */
+        .nav-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+        .nav-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
         }
 
         .nav-menu {
@@ -96,6 +114,7 @@
             background: rgba(255,255,255,0.12);
             color: white;
             transition: all 0.25s ease;
+            flex-shrink: 0;
         }
 
         .nav-btn:hover {
@@ -121,31 +140,78 @@
             display: none;
         }
 
+        /* The Footer gets all remaining space */
         .sidebar-footer {
+            flex-grow: 1; /* Expands to fill the remaining 2/3 space */
+            display: flex;
+            flex-direction: column;
             padding: 15px;
             border-top: 1px solid rgba(255,255,255,0.2);
             background: rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
         .sidebar.collapsed .sidebar-footer {
             display: none;
         }
 
-        /* Sidebar Ad Container */
+        /* Ad Containers */
         .sidebar-ad-box {
-            display: none;
-            min-height: 250px;
-            background: rgba(255,255,255,0.1);
+            flex-grow: 1; /* Stretches dynamically to use all available footer space */
+            position: relative;
+            background: rgba(255,255,255,0.05);
             border-radius: 4px;
             margin-bottom: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .banner-ad-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background: #fff;
+        }
+
+        /* Top and bottom banners */
+        .top-ad-banner, .bottom-ad-banner {
+            height: 90px;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .top-ad-banner { border-bottom: 1px solid #ddd; }
+        .bottom-ad-banner { border-top: 1px solid #ddd; }
+
+        .custom-ad-fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+            color: white;
+            z-index: 1;
+        }
+
+        .custom-ad-fallback h4 { font-size: 14px; margin-bottom: 4px; }
+        .custom-ad-fallback p { font-size: 11px; opacity: 0.9; }
+
+        .adsbygoogle {
             position: relative;
+            z-index: 2;
         }
 
         .legal-links {
             text-align: center;
+            flex-shrink: 0;
         }
 
         .legal-links a {
@@ -165,82 +231,24 @@
         .main-content {
             flex: 1;
             background: #f5f5f5;
-            height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-
-        /* Top Ad Container */
-        .top-ad-banner {
-            display: none;
-            width: 100%;
-            min-height: 70px;
-            background: #fff;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid #ddd;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Fallback House Banners */
-        .fallback-banner {
-            display: none;
-            width: 100%;
-            height: 100%;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .fallback-top-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 10px 20px;
-            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
-            color: #fff;
-        }
-
-        .fallback-top-content span {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .fallback-btn {
-            background: #ff9800;
-            color: #fff;
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .fallback-sidebar-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 10px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            height: 100%;
-            gap: 12px;
+            min-width: 0; /* Flex layout boundary fix */
         }
 
         .report-container {
             flex: 1;
             width: 100%;
-            height: 100%;
+            min-height: 0; /* CRITICAL: Prevents iframe from breaking flex boundaries */
+            display: flex;
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            background: white;
+            background: transparent;
+            display: block;
         }
 
         @media (max-width: 768px) {
@@ -248,17 +256,9 @@
                 position: fixed;
                 left: 0;
                 top: 0;
-                z-index: 1000;
-                height: 100vh;
             }
-
-            .sidebar.collapsed {
-                width: 0;
-            }
-
-            .sidebar.collapsed * {
-                display: none;
-            }
+            .sidebar.collapsed { width: 0; }
+            .sidebar.collapsed * { display: none; }
         }
     </style>
 </head>
@@ -276,42 +276,27 @@
         <div class="nav-wrapper">
             <div class="nav-menu">
                 <button class="nav-btn active" onclick="loadReport(report1, this)">
-                    <span class="icon">📊</span>
-                    <span class="text">Champion Challenger</span>
+                    <span class="icon">📊</span><span class="text">Champion Challenger</span>
                 </button>
                 <button class="nav-btn" onclick="loadReport(report2, this)">
-                    <span class="icon">📈</span>
-                    <span class="text">Productivity Report</span>
+                    <span class="icon">📈</span><span class="text">Productivity Report</span>
                 </button>
                 <button class="nav-btn" onclick="loadReport(report3, this)">
-                    <span class="icon">📋</span>
-                    <span class="text">B2B Training Grid</span>
+                    <span class="icon">📋</span><span class="text">B2B Training Grid</span>
                 </button>
                 <button class="nav-btn" onclick="loadReport(report4, this)">
-                    <span class="icon">🎯</span>
-                    <span class="text">GET Dashboard</span>
+                    <span class="icon">🎯</span><span class="text">GET Dashboard</span>
                 </button>
                 <button class="nav-btn" onclick="loadReport(report5, this)">
-                    <span class="icon">⭐</span>
-                    <span class="text">GET Agent Performance</span>
+                    <span class="icon">⭐</span><span class="text">GET Agent Performance</span>
                 </button>
             </div>
         </div>
 
         <div class="sidebar-footer">
-            <!-- Sidebar Ad Container -->
+            <!-- Sidebar Ad (Never unloads) -->
             <div id="sidebarAdBox" class="sidebar-ad-box">
-                <script async="async" data-cfasync="false" src="https://pl31382642.profitableratecpmnetwork.com/540cba52261034bbaf8637eacca3ff18/invoke.js"></script>
-                <div id="container-540cba52261034bbaf8637eacca3ff18"></div>
-
-                <!-- Method 4: Fallback House Banner for Corporate Environment -->
-                <a id="sidebarFallback" class="fallback-banner" href="https://www.profitableratecpmnetwork.com/i76n71tt4k?key=9f561ad0b2d1737046e26658af21fb4d" target="_blank">
-                    <div class="fallback-sidebar-content">
-                        <span>⚡ Featured Corporate Resource</span>
-                        <p style="font-size: 11px; opacity: 0.8;">Explore external productivity suite tools.</p>
-                        <span class="fallback-btn">Learn More</span>
-                    </div>
-                </a>
+                <!-- Injected via JS -->
             </div>
 
             <div class="legal-links">
@@ -323,29 +308,10 @@
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="mainContentArea">
         
-        <!-- Top Ad Banner Container -->
-        <div id="topAdBanner" class="top-ad-banner">
-            <script>
-                atOptions = {
-                    'key' : '26b0bacf3996ec36297d14533e17fd7a',
-                    'format' : 'iframe',
-                    'height' : 60,
-                    'width' : 468,
-                    'params' : {}
-                };
-            </script>
-            <script src="https://www.highrevenueformat.com/26b0bacf3996ec36297d14533e17fd7a/invoke.js"></script>
-
-            <!-- Method 4: Fallback House Banner for Corporate Environment -->
-            <a id="topFallback" class="fallback-banner" href="https://www.profitableratecpmnetwork.com/i76n71tt4k?key=9f561ad0b2d1737046e26658af21fb4d" target="_blank">
-                <div class="fallback-top-content">
-                    <span>🚀 Upgrade Your Analytics Workflow — Exclusive Partner Offer</span>
-                    <span class="fallback-btn">Check Offer</span>
-                </div>
-            </a>
-        </div>
+        <!-- Dynamic Top Ad Wrapper (Script will inject and potentially destroy this) -->
+        <div id="topAdWrapper" class="banner-ad-wrapper"></div>
 
         <!-- Power BI Report Viewer -->
         <div class="report-container">
@@ -356,107 +322,131 @@
                 allowfullscreen>
             </iframe>
         </div>
+
+        <!-- Dynamic Bottom Ad Wrapper (Script will inject and potentially destroy this) -->
+        <div id="bottomAdWrapper" class="banner-ad-wrapper"></div>
+
     </div>
 
 </div>
 
-<script src="https://pl31382641.profitableratecpmnetwork.com/e4/a2/ee/e4a2ee47d04e946cbcd6813193d39286.js"></script>
-<script src="https://pl31382644.profitableratecpmnetwork.com/02/95/44/0295444bd8b66bc8a37f3166c953bea4.js"></script>
-
 <script>
-    // Power BI Reports
     const report1 = "https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report2 = "https://app.powerbi.com/view?r=eyJrIjoiZWUwNDVmMjktZWVjNC00ZDQwLTlhMDctYjhjNzgzOGRmNWYyIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report3 = "https://app.powerbi.com/view?r=eyJrIjoiOWQxMGZlMDAtYzEzZC00MDA4LTkwNDEtNDNmNDBkOTg3ZTI3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report4 = "https://app.powerbi.com/view?r=eyJrIjoiNjQ3NDM0MDEtMGZjNy00NTgwLTk5MGYtODA4YWYxMWZjZTNiIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
     const report5 = "https://app.powerbi.com/view?r=eyJrIjoiODgxNTAyOWEtMDY3Yy00YTYyLWJlZGEtZjRiMjM0NzE5OTM3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
 
-    // Smartlink Target Route (Netlify Rewritten Route or Direct Smartlink)
-    const SMARTLINK_URL = "https://www.profitableratecpmnetwork.com/i76n71tt4k?key=9f561ad0b2d1737046e26658af21fb4d";
-    let smartlinkTriggered = false;
-
-    // Report Switcher + First-Click Smartlink Trigger
     function loadReport(url, button) {
-        // Log report selection in GA4
-        if (typeof gtag === 'function') {
-            gtag('event', 'select_report', {
-                'report_name': button.innerText.trim()
-            });
-        }
-
-        // Trigger Smartlink on first navigation click
-        if (!smartlinkTriggered && SMARTLINK_URL !== "") {
-            window.open(SMARTLINK_URL, '_blank');
-            smartlinkTriggered = true;
-        }
-
         document.getElementById("reportFrame").src = url;
         document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
         button.classList.add("active");
     }
 
-    // Sidebar Toggle
     function toggleSidebar() {
         document.getElementById("sidebar").classList.toggle("collapsed");
     }
 
-    // Adsterra Monitor with Method 4 Fallback Trigger
-    function setupAdWithFallback(containerId, fallbackId, displayStyle = 'flex') {
-        const container = document.getElementById(containerId);
-        const fallbackEl = document.getElementById(fallbackId);
-        if (!container) return;
+    // ---------------------------------------------------------
+    // DYNAMIC DOM AD MANAGER
+    // ---------------------------------------------------------
+    const customAdPool = [
+        { title: "MIS Digital Transformation", text: "Automating workflows for a smarter tomorrow.", bg: "linear-gradient(90deg, #1e3c72 0%, #2a5298 100%)" },
+        { title: "Data Analytics Hub", text: "Empowering decisions with real-time insights.", bg: "linear-gradient(90deg, #0052d4 0%, #4364f7 50%, #6fb1fc 100%)" },
+        { title: "Operations Excellence", text: "Driving productivity through innovative toolsets.", bg: "linear-gradient(90deg, #11998e 0%, #38ef7d 100%)" }
+    ];
 
-        let adsterraLoaded = false;
-        let timerStarted = false;
-
-        function handleAdsterraSuccess() {
-            if (adsterraLoaded) return;
-            adsterraLoaded = true;
-
-            // Hide fallback banner and display Adsterra script content
-            if (fallbackEl) fallbackEl.style.display = 'none';
-            container.style.display = displayStyle;
-
-            // 2-minute auto-hide timer for live Adsterra unit
-            if (!timerStarted) {
-                timerStarted = true;
-                setTimeout(() => {
-                    container.style.display = 'none';
-                }, 120000);
-            }
-        }
-
-        function handleFallbackDisplay() {
-            if (adsterraLoaded) return;
-            container.style.display = displayStyle;
-            if (fallbackEl) fallbackEl.style.display = 'block';
-        }
-
-        // Observer checks for Adsterra dynamic script injection
-        const observer = new MutationObserver(() => {
-            const hasIframe = container.querySelector('iframe') !== null;
-            if (hasIframe) {
-                handleAdsterraSuccess();
-            }
-        });
-
-        observer.observe(container, { childList: true, subtree: true });
-
-        // Fallback Timeout: If Adsterra is blocked or fails after 3 seconds, render the fallback banner
-        setTimeout(() => {
-            const hasIframe = container.querySelector('iframe') !== null;
-            if (hasIframe) {
-                handleAdsterraSuccess();
-            } else {
-                handleFallbackDisplay();
-            }
-        }, 3000);
+    function getRandomFallback() {
+        return customAdPool[Math.floor(Math.random() * customAdPool.length)];
     }
 
+    // Sidebar Ad logic: Injects once, stays forever. NEVER unloads.
+    function initializeSidebarAd() {
+        const container = document.getElementById('sidebarAdBox');
+        if (!container) return;
+
+        const ad = getRandomFallback();
+        container.innerHTML = `
+            <div class="custom-ad-fallback" style="background: ${ad.bg}">
+                <h4>⚡ ${ad.title}</h4><p>${ad.text}</p>
+            </div>
+            <ins class="adsbygoogle"
+                style="display:inline-block; width:100%; height:100%; min-height:250px;"
+                data-ad-client="ca-pub-6978764838614552"
+                data-ad-slot="9156007073"
+                data-ad-format="vertical"></ins>
+        `;
+
+        const insTag = container.querySelector('ins.adsbygoogle');
+        const fallback = container.querySelector('.custom-ad-fallback');
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-ad-status' && insTag.getAttribute('data-ad-status') === 'filled') {
+                    if(fallback) fallback.remove(); // Ad loaded, remove fallback layer
+                    observer.disconnect();
+                }
+            });
+        });
+
+        observer.observe(insTag, { attributes: true });
+        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+    }
+
+    // Banner Ad Logic (Top/Bottom): Injects into DOM, completely DESTROYS the DOM element if not filled in 10s.
+    function mountVolatileBanner(wrapperId, adSlot, className) {
+        const wrapper = document.getElementById(wrapperId);
+        if (!wrapper) return;
+
+        // 1. Dynamically create the ad structure
+        const ad = getRandomFallback();
+        const bannerHtml = document.createElement('div');
+        bannerHtml.className = className;
+        bannerHtml.innerHTML = `
+            <div class="custom-ad-fallback" style="background: ${ad.bg}">
+                <h4>⚡ ${ad.title}</h4>
+            </div>
+            <ins class="adsbygoogle"
+                style="display:inline-block; width:100%; height:90px;"
+                data-ad-client="ca-pub-6978764838614552"
+                data-ad-slot="${adSlot}"
+                data-ad-format="horizontal"></ins>
+        `;
+        wrapper.appendChild(bannerHtml);
+
+        const insTag = bannerHtml.querySelector('ins.adsbygoogle');
+        const fallback = bannerHtml.querySelector('.custom-ad-fallback');
+        let isFilled = false;
+
+        // 2. Watch for AdSense to fill
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-ad-status' && insTag.getAttribute('data-ad-status') === 'filled') {
+                    isFilled = true;
+                    if (fallback) fallback.remove(); 
+                }
+            });
+        });
+        
+        observer.observe(insTag, { attributes: true });
+        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+
+        // 3. The 10-Second Unload Script: Completely removes the element from the DOM structure
+        setTimeout(() => {
+            if (!isFilled) {
+                observer.disconnect();
+                wrapper.remove(); // Completely destroys the wrapper, reclaiming the space natively
+            }
+        }, 10000);
+    }
+
+    // Initialize all ads
     window.addEventListener('DOMContentLoaded', () => {
-        setupAdWithFallback('topAdBanner', 'topFallback', 'flex');
-        setupAdWithFallback('sidebarAdBox', 'sidebarFallback', 'flex');
+        initializeSidebarAd();
+        mountVolatileBanner('topAdWrapper', '1577347061', 'top-ad-banner');
+        mountVolatileBanner('bottomAdWrapper', '9541440879', 'bottom-ad-banner');
     });
+
 </script>
 
 </body>
