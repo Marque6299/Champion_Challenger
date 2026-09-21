@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://overwatchcc.netlify.app/sitemap.xml
