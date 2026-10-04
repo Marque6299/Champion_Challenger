@@ -13,7 +13,9 @@ h1,h2,h3{font-family:var(--head);line-height:1.2;color:var(--navy)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 .skip{position:absolute;left:-999px;top:8px;background:#fff;color:var(--navy);padding:8px 12px;border-radius:6px;z-index:100}
 .skip:focus{left:8px}
-:focus-visible{outline:3px solid #F2B84B;outline-offset:2px}
+:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.site-header :focus-visible,.hero :focus-visible,.site-footer :focus-visible,.cta-band :focus-visible{outline-color:#F2B84B}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 [id]{scroll-margin-top:16px}
 
 /* Header */
@@ -82,6 +84,8 @@ h1,h2,h3{font-family:var(--head);line-height:1.2;color:var(--navy)}
 .callout-title{font-family:var(--head);font-weight:700;color:var(--navy);margin-bottom:6px}
 .inbrief{background:var(--tint);border-left:4px solid var(--blue);border-radius:6px;padding:16px 20px}
 .inbrief ul{padding-left:1.2em}
+.highlight-box{background:var(--tint);border-left:4px solid var(--blue);border-radius:6px;padding:16px 20px}
+.tool-sec{scroll-margin-top:16px}
 .toc{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 20px}
 .toc ul{columns:2;column-gap:32px;list-style:none;padding-left:0}
 .toc li{break-inside:avoid;margin-top:.25em}

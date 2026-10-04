@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, follow">
-    <title>MIS Digital Transformation Portal</title>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6978764838614552" crossorigin="anonymous"></script>
+    <title>Agent Desk Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
-            width: 100vw; height: 100vh;
-            font-family: "Segoe UI", Arial, sans-serif;
+            width: 100%; height: 100%; height: 100dvh;
+            font-family: "Source Sans 3", "Segoe UI", system-ui, Arial, sans-serif;
             overflow: hidden; 
             background: #f0f2f5;
         }
@@ -26,7 +27,7 @@
         /* Sidebar */
         .sidebar {
             width: 260px; height: 100%;
-            background: #0078d4; color: white;
+            background: #0B2A4A; color: white;
             transition: width 0.3s ease;
             display: flex; flex-direction: column;
             box-shadow: 2px 0 8px rgba(0,0,0,0.15);
@@ -56,20 +57,19 @@
         .nav-menu { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
         
         .nav-section {
-            font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
-            color: rgba(255,255,255,0.6); padding: 10px 10px 2px 10px; font-weight: 600;
+            font-size: 14px; color: #9FB8D2; padding: 10px 10px 2px 10px; font-weight: 600;
         }
         .sidebar.collapsed .nav-section { display: none; }
 
         .nav-btn {
             display: flex; align-items: center; gap: 12px;
             width: 100%; border: none; border-radius: 6px;
-            cursor: pointer; padding: 12px; font-size: 13px; font-weight: 600;
+            cursor: pointer; padding: 12px; font-size: 14px; font-weight: 600;
             background: rgba(255,255,255,0.05); color: white;
             transition: all 0.2s ease; flex-shrink: 0;
         }
         .nav-btn:hover { background: rgba(255,255,255,0.15); }
-        .nav-btn.active { background: white; color: #0078d4; }
+        .nav-btn.active { background: white; color: #0B2A4A; }
         .icon { min-width: 24px; text-align: center; font-size: 16px; }
         .text { white-space: nowrap; }
         .sidebar.collapsed .text { display: none; }
@@ -81,15 +81,10 @@
             background: rgba(0,0,0,0.1); overflow: hidden;
         }
         .sidebar.collapsed .sidebar-footer { display: none; }
-        .sidebar-ad-box {
-            flex-grow: 1; position: relative; background: rgba(255,255,255,0.05);
-            border-radius: 4px; margin-bottom: 12px; overflow: hidden;
-            display: flex; justify-content: center; align-items: center;
-        }
 
         .legal-links { text-align: center; flex-shrink: 0; }
         .legal-links a {
-            color: rgba(255,255,255,0.7); font-size: 11px;
+            color: #E6F0FA; font-size: 14px;
             text-decoration: none; display: block; margin-bottom: 5px;
         }
         .legal-links a:hover { color: white; text-decoration: underline; }
@@ -98,22 +93,6 @@
         .main-content {
             flex: 1; display: flex; flex-direction: column; min-width: 0;
         }
-        .banner-ad-wrapper { width: 100%; display: flex; justify-content: center; background: #fff; }
-        
-        /* Dynamic Banner Heights (Compact 45px fallback, expands to 90px on Google Ad fill) */
-        .top-ad-banner { height: 45px; width: 100%; position: relative; border-bottom: 1px solid #ddd; transition: height 0.3s ease; }
-        .bottom-ad-banner { height: 45px; width: 100%; position: relative; border-top: 1px solid #ddd; transition: height 0.3s ease; }
-        .banner-filled { height: 90px !important; }
-
-        /* Fallback Ad Styling */
-        .custom-ad-fallback {
-            position: absolute; inset: 0; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
-            padding: 5px 10px; color: white; z-index: 1;
-        }
-        .custom-ad-fallback h4 { font-size: 13px; margin-bottom: 2px; }
-        .custom-ad-fallback p { font-size: 10px; opacity: 0.9; }
-        .adsbygoogle { position: relative; z-index: 2; }
 
         /* Content Container */
         .content-container {
@@ -136,70 +115,70 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 25px;
         }
 
-        .tool-header { font-size: 20px; color: #333; margin-bottom: 20px; border-bottom: 2px solid #0078d4; padding-bottom: 10px; }
+        .tool-header { font-size: 20px; color: #1C2733; margin-bottom: 20px; border-bottom: 2px solid #0067B8; padding-bottom: 10px; }
         
-        .scratchpad { width: 100%; height: 250px; padding: 15px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; resize: none; font-size: 14px; }
+        .scratchpad { width: 100%; height: 250px; padding: 15px; border: 1px solid #6B7C93; border-radius: 6px; font-family: inherit; resize: none; font-size: 14px; }
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 13px; color: #555; margin-bottom: 5px; font-weight: 600; }
-        .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .form-group label { display: block; font-size: 14px; color: #53647A; margin-bottom: 5px; font-weight: 600; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #6B7C93; border-radius: 4px; font-size: 14px; }
         
-        .btn-primary { background: #0078d4; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-top: 10px; }
-        .btn-primary:hover { background: #005a9e; }
-        .btn-danger { background: #d13438; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        .btn-primary { background: #0067B8; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        .btn-primary:hover { background: #00518F; }
+        .btn-danger { background: #B42318; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-top: 10px; }
         
-        .timer-display { font-size: 48px; font-weight: bold; color: #333; text-align: center; margin: 30px 0; font-variant-numeric: tabular-nums; }
+        .timer-display { font-size: 48px; font-weight: bold; color: #1C2733; text-align: center; margin: 30px 0; font-variant-numeric: tabular-nums; }
         .timer-controls { display: flex; justify-content: center; gap: 15px; }
         
         .phonetic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; max-height: 350px; overflow-y: auto; padding-right: 5px; }
-        .phonetic-card { background: #f8f9fa; border: 1px solid #e1e4e8; padding: 8px 12px; border-radius: 4px; display: flex; justify-content: space-between; font-size: 13px; }
-        .phonetic-card span:first-child { font-weight: bold; color: #0078d4; }
+        .phonetic-card { background: #f8f9fa; border: 1px solid #e1e4e8; padding: 8px 12px; border-radius: 4px; display: flex; justify-content: space-between; font-size: 14px; }
+        .phonetic-card span:first-child { font-weight: bold; color: #0067B8; }
 
         /* ===== Added agent-tool styles ===== */
-        .tool-desc { margin-bottom: 15px; font-size: 13px; color: #666; }
-        .tool-note { background: #fff8e1; border: 1px solid #f0d27a; border-radius: 6px; padding: 9px 12px; font-size: 12.5px; color: #5c4a00; margin-bottom: 14px; }
+        .tool-desc { margin-bottom: 15px; font-size: 14px; color: #53647A; }
+        .tool-note { background: #fff8e1; border: 1px solid #f0d27a; border-radius: 6px; padding: 9px 12px; font-size: 14px; color: #5c4a00; margin-bottom: 14px; }
         .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
         .btn-row .btn-primary, .btn-row .btn-danger, .btn-row .btn-ghost { margin-top: 0; }
-        .btn-ghost { background: #fff; color: #0078d4; border: 1px solid #0078d4; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .btn-ghost { background: #fff; color: #0067B8; border: 1px solid #0067B8; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 14px; }
         .btn-ghost:hover { background: #e6f2fb; }
-        .counts { font-size: 12px; color: #666; margin: 6px 0 10px; }
-        .timer-status { text-align: center; font-size: 13px; color: #666; margin: -14px 0 18px; min-height: 18px; }
-        .target-row { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; color: #666; margin-bottom: 6px; }
-        .target-row input { width: 90px; padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .counts { font-size: 14px; color: #53647A; margin: 6px 0 10px; }
+        .timer-status { text-align: center; font-size: 14px; color: #53647A; margin: -14px 0 18px; min-height: 18px; }
+        .target-row { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; color: #53647A; margin-bottom: 6px; }
+        .target-row input { width: 90px; padding: 6px 8px; border: 1px solid #6B7C93; border-radius: 4px; font-size: 14px; }
 
         .spell-out { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; min-height: 56px; }
         .spell-chip { display: flex; flex-direction: column; align-items: center; min-width: 58px; padding: 6px 9px; background: #f8f9fa; border: 1px solid #e1e4e8; border-radius: 4px; }
-        .spell-chip b { font-size: 18px; line-height: 1.15; color: #333; }
-        .spell-chip span { font-size: 11px; font-weight: 600; color: #0078d4; }
+        .spell-chip b { font-size: 18px; line-height: 1.15; color: #1C2733; }
+        .spell-chip span { font-size: 14px; font-weight: 600; color: #0067B8; }
         .spell-chip.gap { min-width: 18px; background: none; border: none; }
         .phonetic-divider { border: none; border-top: 1px solid #e1e4e8; margin: 20px 0 14px; }
 
         .tabs-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-        .tab-btn { background: #fff; border: 1px solid #b9c5d0; color: #333; padding: 7px 13px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; }
-        .tab-btn[aria-pressed="true"] { background: #0078d4; border-color: #0078d4; color: #fff; }
+        .tab-btn { background: #fff; border: 1px solid #6B7C93; color: #1C2733; padding: 7px 13px; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 600; }
+        .tab-btn[aria-pressed="true"] { background: #0067B8; border-color: #0067B8; color: #fff; }
         .phrase-list { list-style: none; display: grid; gap: 8px; }
-        .phrase-item { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; width: 100%; text-align: left; font: inherit; font-size: 14px; padding: 10px 13px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; color: #333; cursor: pointer; }
-        .phrase-item:hover { border-color: #0078d4; background: #f3f9fe; }
-        .phrase-item .copy-tag { flex-shrink: 0; font-size: 12px; font-weight: 600; color: #0078d4; }
+        .phrase-item { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; width: 100%; text-align: left; font: inherit; font-size: 14px; padding: 10px 13px; border: 1px solid #e1e4e8; border-radius: 6px; background: #fff; color: #1C2733; cursor: pointer; }
+        .phrase-item:hover { border-color: #0067B8; background: #f3f9fe; }
+        .phrase-item .copy-tag { flex-shrink: 0; font-size: 14px; font-weight: 600; color: #0067B8; }
 
         .calc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .calc-title { font-size: 15px; color: #333; margin: 4px 0 10px; }
-        .result-box { margin: 6px 0 4px; padding: 12px 14px; background: #f3f9fe; border-left: 4px solid #0078d4; border-radius: 4px; font-size: 13px; color: #444; }
-        .result-box strong { font-size: 22px; color: #222; font-variant-numeric: tabular-nums; }
+        .calc-title { font-size: 15px; color: #1C2733; margin: 4px 0 10px; }
+        .result-box { margin: 6px 0 4px; padding: 12px 14px; background: #f3f9fe; border-left: 4px solid #0067B8; border-radius: 4px; font-size: 14px; color: #1C2733; }
+        .result-box strong { font-size: 22px; color: #1C2733; font-variant-numeric: tabular-nums; }
         .calc-divider { border: none; border-top: 1px solid #e1e4e8; margin: 22px 0 14px; }
 
         .tz-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
         .tz-controls .form-group { flex: 1 1 180px; margin-bottom: 0; }
         .tz-controls .btn-primary { margin-top: 0; }
         .tz-list { list-style: none; margin-top: 18px; border-top: 1px solid #e1e4e8; }
-        .tz-list li { display: grid; grid-template-columns: 1.3fr 1fr 1.3fr 1fr; gap: 10px; padding: 10px 0; border-bottom: 1px solid #e1e4e8; align-items: center; font-size: 13px; }
-        .tz-name { font-weight: 600; color: #333; }
-        .tz-time { font-weight: 700; font-variant-numeric: tabular-nums; color: #222; }
+        .tz-list li { display: grid; grid-template-columns: 1.3fr 1fr 1.3fr 1fr; gap: 10px; padding: 10px 0; border-bottom: 1px solid #e1e4e8; align-items: center; font-size: 14px; }
+        .tz-name { font-weight: 600; color: #1C2733; }
+        .tz-time { font-weight: 700; font-variant-numeric: tabular-nums; color: #1C2733; }
         .tz-flag { display: inline-flex; align-items: center; gap: 6px; }
         .tz-flag i { width: 9px; height: 9px; border-radius: 50%; background: #999; display: inline-block; }
         .tz-flag.open i { background: #1f9d6b; }
         .tz-flag.closed i { background: #d9931a; }
 
-        #agentToast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px); background: #222; color: #fff; padding: 9px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 1000; }
+        #agentToast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px); background: #1C2733; color: #fff; padding: 9px 18px; border-radius: 6px; font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 1000; }
         #agentToast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         @media (max-width: 700px) {
@@ -207,6 +186,21 @@
             .calc-grid { grid-template-columns: 1fr; }
             .tz-list li { grid-template-columns: 1fr 1fr; row-gap: 2px; }
         }
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        :focus-visible { outline: 3px solid #0B2A4A; outline-offset: 2px; }
+        .sidebar :focus-visible { outline-color: #F2B84B; }
+        a.btn-ghost { text-decoration: none; display: inline-block; }
+        .menu-open { display: none; }
+        #frameHelp { display: none; position: absolute; inset: 0; z-index: 5; background: #F5F7FA; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+        #frameHelp.show { display: flex; }
+        #frameHelp > div { max-width: 420px; }
+        @media (max-width: 900px) {
+            .sidebar { position: fixed; inset: 0 auto 0 0; width: 260px; transform: translateX(-100%); transition: transform 0.2s ease; }
+            .sidebar.open { transform: none; }
+            .menu-open { display: block; margin: 8px; align-self: flex-start; min-height: 44px; padding: 0 16px; }
+            .toggle-btn { min-width: 44px; min-height: 44px; }
+        }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
     </style>
 </head>
 <body>
@@ -214,8 +208,8 @@
 <div class="layout">
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
-            <span class="sidebar-title">Operations Portal</span>
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            <span class="sidebar-title">Agent Desk</span>
+            <button class="toggle-btn" type="button" onclick="toggleSidebar()" aria-label="Toggle menu" aria-expanded="true" aria-controls="sidebar">☰</button>
         </div>
 
         <div class="nav-wrapper">
@@ -259,11 +253,10 @@
         </div>
 
         <div class="sidebar-footer">
-            <div id="sidebarAdBox" class="sidebar-ad-box"></div>
             <div class="legal-links">
-                <a href="#">Powered by MIS Digital</a>
                 <a href="../how-it-works.html">How it works</a>
                 <a href="../privacy-policy.html">Privacy Policy</a>
+                <a href="../contact.html">Contact</a>
                 <a href="../terms.html">Terms</a>
                 <a href="../cookie-policy.html">Cookie Policy</a>
             </div>
@@ -271,18 +264,20 @@
     </div>
 
     <!-- Main Content -->
-    <div class="main-content" id="mainContentArea">
-        <div id="topAdWrapper" class="banner-ad-wrapper"></div>
+    <main class="main-content" id="mainContentArea">
+        <button class="menu-open btn-ghost" type="button" onclick="toggleSidebar()" aria-label="Open menu" aria-controls="sidebar">Menu</button>
 
         <div class="content-container">
-            <iframe id="reportFrame" src="https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D" allowfullscreen></iframe>
+            <h1 id="reportTitle" class="sr-only">Champion Challenger report</h1>
+            <div id="frameHelp" role="alert"><div><h2>The report is taking longer than usual.</h2><p>Power BI may be blocked on this network, or the connection is slow. Try again, or open the report in a new tab.</p><div class="btn-row" style="justify-content:center;margin-top:14px"><button class="btn-primary" type="button" onclick="retryFrame()">Try again</button><a class="btn-ghost" id="frameNewTab" href="#" target="_blank" rel="noopener">Open in a new tab</a></div></div></div>
+            <iframe id="reportFrame" title="Champion Challenger report" src="https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D" allowfullscreen></iframe>
             
             <div id="nativeTools">
                 
                 <!-- 1. Scratchpad Tool -->
                 <div id="tool-notes" class="tool-view">
-                    <h2 class="tool-header">Quick Call Scratchpad</h2>
-                    <p style="margin-bottom:15px; font-size:13px; color:#666;">Notes auto-save locally to your browser storage.</p>
+                    <h1 class="tool-header">Quick Call Scratchpad</h1>
+                    <p style="margin-bottom:15px; font-size: 14px; color:#53647A;">Notes auto-save locally to your browser storage.</p>
                     <div class="tool-note"><strong>Keep it safe:</strong> don't store card numbers, passwords or full ID numbers here. Notes stay in this browser, but a shared computer is not private.</div>
                     <div class="btn-row">
                         <button class="btn-ghost" onclick="insertNoteTemplate('standard')">Standard template</button>
@@ -290,7 +285,7 @@
                         <button class="btn-ghost" onclick="insertNoteTemplate('escalation')">Escalation template</button>
                         <button class="btn-ghost" onclick="insertNoteTime()">Insert time</button>
                     </div>
-                    <textarea id="scratchpadInput" class="scratchpad" placeholder="Type customer info, reference numbers, or shorthand notes..."></textarea>
+                    <textarea id="scratchpadInput" aria-label="Call notes" class="scratchpad" placeholder="Type customer info, reference numbers, or shorthand notes..."></textarea>
                     <div class="counts" id="notesCount">0 words, 0 characters</div>
                     <div class="btn-row">
                         <button class="btn-primary" onclick="copyNotes()">Copy Notes</button>
@@ -301,7 +296,7 @@
 
                 <!-- 2. AHT Timer Tool -->
                 <div id="tool-timer" class="tool-view">
-                    <h2 class="tool-header">AHT Stopwatch</h2>
+                    <h1 class="tool-header">AHT Stopwatch</h1>
                     <div class="target-row">
                         <label for="ahtTarget">Target handling threshold (seconds)</label>
                         <input id="ahtTarget" type="number" min="30" max="7200" step="10" inputmode="numeric" value="490">
@@ -310,15 +305,15 @@
                     <div class="timer-status" id="timerStatus" role="status">Ready</div>
                     <div class="timer-controls">
                         <button class="btn-primary" onclick="startTimer()">Start</button>
-                        <button class="btn-primary" style="background:#5c2d91;" onclick="pauseTimer()">Pause</button>
+                        <button class="btn-ghost" onclick="pauseTimer()">Pause</button>
                         <button class="btn-danger" onclick="resetTimer()">Reset</button>
                     </div>
                 </div>
 
                 <!-- 3. NATO Phonetic Chart Tool -->
                 <div id="tool-phonetic" class="tool-view">
-                    <h2 class="tool-header">NATO Phonetic Alphabet Lookup</h2>
-                    <p style="margin-bottom:15px; font-size:13px; color:#666;">Standard telephony spelling reference for customer account verification.</p>
+                    <h1 class="tool-header">NATO Phonetic Alphabet Lookup</h1>
+                    <p style="margin-bottom:15px; font-size: 14px; color:#53647A;">Standard telephony spelling reference for customer account verification.</p>
                     <div class="form-group">
                         <label for="spellInput">Spell it out</label>
                         <input id="spellInput" class="form-control" type="text" autocomplete="off" maxlength="80" placeholder="For example: maria.santos@example.com">
@@ -331,7 +326,7 @@
 
                 <!-- 5. AHT Calculator Tool -->
                 <div id="tool-ahtcalc" class="tool-view">
-                    <h2 class="tool-header">AHT Calculator</h2>
+                    <h1 class="tool-header">AHT Calculator</h1>
                     <p class="tool-desc">Average handle time = (talk + hold + after-call work) ÷ calls. Some teams also count transfer or conference time, so confirm how yours is measured. Results are compared with the target set in the AHT Timer.</p>
 
                     <h3 class="calc-title">One call</h3>
@@ -355,7 +350,7 @@
 
                 <!-- 6. Phrase Bank Tool -->
                 <div id="tool-phrases" class="tool-view">
-                    <h2 class="tool-header">Phrase Bank</h2>
+                    <h1 class="tool-header">Phrase Bank</h1>
                     <p class="tool-desc">Pick a category and click a phrase to copy it. Replace anything in [brackets] with your details, and always follow your company's approved scripts and compliance wording.</p>
                     <div class="tabs-row" id="phraseTabs" role="group" aria-label="Phrase categories"></div>
                     <ul class="phrase-list" id="phraseList"></ul>
@@ -363,7 +358,7 @@
 
                 <!-- 7. Callback Time Zone Tool -->
                 <div id="tool-timezones" class="tool-view">
-                    <h2 class="tool-header">Callback Time Zone Converter</h2>
+                    <h1 class="tool-header">Callback Time Zone Converter</h1>
                     <p class="tool-desc">Enter a date and time in one zone to see the same moment elsewhere, and whether it falls in typical business hours (9:00 AM to 6:00 PM on a weekday). Confirm the customer's preferred time with them directly.</p>
                     <div class="tz-controls">
                         <div class="form-group">
@@ -381,9 +376,9 @@
 
                 <!-- 4. Text Formatter Tool -->
                 <div id="tool-formatter" class="tool-view">
-                    <h2 class="tool-header">Quick Text Case & Cleanup Tool</h2>
+                    <h1 class="tool-header">Quick Text Case & Cleanup Tool</h1>
                     <div class="form-group">
-                        <label>Input Text</label>
+                        <label for="formatInput">Input Text</label>
                         <textarea id="formatInput" class="scratchpad" style="height: 120px;" placeholder="Paste customer text or notes here..."></textarea>
                     </div>
                     <div class="counts" id="formatCount">0 words, 0 characters</div>
@@ -402,9 +397,7 @@
 
             </div>
         </div>
-
-        <div id="bottomAdWrapper" class="banner-ad-wrapper"></div>
-    </div>
+    </main>
 </div>
 
 <div id="agentToast" role="status" aria-live="polite"></div>
@@ -416,18 +409,34 @@
     const report5 = "https://app.powerbi.com/view?r=eyJrIjoiODgxNTAyOWEtMDY3Yy00YTYyLWJlZGEtZjRiMjM0NzE5OTM3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D";
 
     function setActiveNav(button) {
-        document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
+        document.querySelectorAll(".nav-btn").forEach(btn => { btn.classList.remove("active"); btn.removeAttribute("aria-current"); });
+        button.classList.add("active"); button.setAttribute("aria-current", "page");
+        if (document.getElementById("sidebar").classList.contains("open")) toggleSidebar();
     }
 
+    // Report frame states: loading, slow or blocked (help after 12 s), retry
+    let frameTimer, lastUrl = report1;
+    const frameEl = document.getElementById("reportFrame"), helpEl = document.getElementById("frameHelp");
+    function watchFrame(url) {
+        lastUrl = url; helpEl.classList.remove("show"); clearTimeout(frameTimer);
+        document.getElementById("frameNewTab").href = url;
+        frameTimer = setTimeout(() => helpEl.classList.add("show"), 12000);
+    }
+    function retryFrame() { watchFrame(lastUrl); frameEl.src = lastUrl; }
+    frameEl.addEventListener("load", () => { clearTimeout(frameTimer); helpEl.classList.remove("show"); });
+    watchFrame(report1);
+
     function loadReport(url, button) {
-        document.getElementById("reportFrame").style.display = "block";
+        const name = button.querySelector(".text").textContent.trim();
         document.getElementById("nativeTools").style.display = "none";
-        document.getElementById("reportFrame").src = url;
+        frameEl.style.display = "block"; frameEl.title = name + " report";
+        const t = document.getElementById("reportTitle"); t.hidden = false; t.textContent = name + " report";
+        watchFrame(url); frameEl.src = url;
         setActiveNav(button);
     }
 
     function loadTool(toolId, button) {
+        clearTimeout(frameTimer); helpEl.classList.remove("show"); document.getElementById("reportTitle").hidden = true;
         document.getElementById("reportFrame").style.display = "none";
         document.getElementById("nativeTools").style.display = "block";
         
@@ -437,16 +446,25 @@
         setActiveNav(button);
     }
 
+    const smallScreen = matchMedia("(max-width: 900px)");
     function toggleSidebar() {
-        document.getElementById("sidebar").classList.toggle("collapsed");
+        const sb = document.getElementById("sidebar");
+        const on = smallScreen.matches ? sb.classList.toggle("open") : !sb.classList.toggle("collapsed");
+        document.querySelector(".toggle-btn").setAttribute("aria-expanded", String(on));
+        if (smallScreen.matches) {
+            if (on) { sb.removeAttribute("inert"); sb.querySelector(".nav-btn").focus(); }
+            else { sb.setAttribute("inert", ""); document.querySelector(".menu-open").focus(); }
+        }
     }
+    if (smallScreen.matches) document.getElementById("sidebar").setAttribute("inert", "");
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && document.getElementById("sidebar").classList.contains("open")) toggleSidebar(); });
 
     // --- SCRATCHPAD LOGIC ---
     const scratchpad = document.getElementById('scratchpadInput');
-    scratchpad.value = localStorage.getItem('agentNotes') || '';
-    scratchpad.addEventListener('input', () => localStorage.setItem('agentNotes', scratchpad.value));
+    scratchpad.value = safeGet('agentNotes', '');
+    scratchpad.addEventListener('input', () => safeSet('agentNotes', scratchpad.value));
     function clearNotes() {
-        if(confirm("Clear all notes?")) { scratchpad.value = ''; localStorage.removeItem('agentNotes'); refreshNoteCount(); }
+        if(confirm("Clear all notes?")) { scratchpad.value = ''; safeSet('agentNotes', ''); refreshNoteCount(); }
     }
 
     // --- SHARED HELPERS FOR AGENT TOOLS ---
@@ -532,7 +550,7 @@
         const el = document.getElementById("stopwatch");
         el.innerText = `${h}:${m}:${s}`;
         const target = getTargetSeconds();
-        el.style.color = total > target ? "#d13438" : (total >= target * 0.75 ? "#c77c0a" : "#333");
+        el.style.color = total > target ? "#B42318" : (total >= target * 0.75 ? "#8A5300" : "#1C2733");
 
         let label;
         if (total > target) label = 'Over target';
@@ -597,7 +615,7 @@
         spellOutEl.replaceChildren();
         if (!spellInputEl.value.trim()) {
             const hint = document.createElement('span');
-            hint.style.cssText = 'font-size:13px;color:#666';
+            hint.style.cssText = 'font-size: 14px;color:#53647A';
             hint.textContent = 'Type a name, email address or reference code to see it spelled out.';
             spellOutEl.appendChild(hint);
             return;
@@ -857,95 +875,12 @@
         setNow();
     })();
 
-    // --- EXPANDED UNIQUE LOCAL AD POOL (8 Variations) ---
-    const customAdPool = [
-        { title: "MIS Digital Transformation", text: "Automating internal operational workflows." },
-        { title: "Data Analytics Hub", text: "Empowering decisions with live BI metrics." },
-        { title: "Operations Excellence", text: "Driving agent productivity through tooling." },
-        { title: "Knowledge Base Portal", text: "Access internal guides and quick references." },
-        { title: "Agent Support & Resources", text: "Streamlining daily queue handling processes." },
-        { title: "Quality Assurance Tips", text: "Best practices for top scorecard tiers." },
-        { title: "Automation Initiative", text: "Building robust scripts for smart tracking." },
-        { title: "Performance Insight Center", text: "Monitor KPIs securely in real-time." }
-    ];
-
-    let adPoolCursor = Math.floor(Math.random() * customAdPool.length);
-    function getUniqueFallback() {
-        const ad = customAdPool[adPoolCursor % customAdPool.length];
-        adPoolCursor++; // Ensures subsequent containers pull different ads
-        return ad;
-    }
-
-    // --- SIDEBAR AD (Stays fixed) ---
-    function initializeSidebarAd() {
-        const container = document.getElementById('sidebarAdBox');
-        const ad = getUniqueFallback();
-        container.innerHTML = `
-            <div class="custom-ad-fallback" style="background: linear-gradient(135deg, #0078d4, #005a9e);">
-                <h4>⚡ ${ad.title}</h4><p>${ad.text}</p>
-            </div>
-            <ins class="adsbygoogle" style="display:inline-block; width:100%; height:100%; min-height:250px;" data-ad-client="ca-pub-6978764838614552" data-ad-slot="9156007073" data-ad-format="vertical"></ins>
-        `;
-        const insTag = container.querySelector('ins.adsbygoogle');
-        const fallback = container.querySelector('.custom-ad-fallback');
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((m) => { if (m.attributeName === 'data-ad-status' && insTag.getAttribute('data-ad-status') === 'filled') { if(fallback) fallback.remove(); observer.disconnect(); } });
-        });
-        observer.observe(insTag, { attributes: true });
-        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
-    }
-
-    // --- BANNER ADS WITH 10-SECOND RULE (Compact 45px -> Expands to 90px on Google Fill, or Unloads) ---
-    function mountVolatileBanner(wrapperId, adSlot, className) {
-        const wrapper = document.getElementById(wrapperId);
-        if (!wrapper) return;
-        
-        const ad = getUniqueFallback();
-        const bannerHtml = document.createElement('div');
-        bannerHtml.className = className;
-        bannerHtml.innerHTML = `
-            <div class="custom-ad-fallback" style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
-                <h4>⚡ ${ad.title}</h4>
-                <p>${ad.text}</p>
-            </div>
-            <ins class="adsbygoogle" style="display:inline-block; width:100%; height:100%;" data-ad-client="ca-pub-6978764838614552" data-ad-slot="${adSlot}" data-ad-format="horizontal"></ins>
-        `;
-        wrapper.appendChild(bannerHtml);
-        const insTag = bannerHtml.querySelector('ins.adsbygoogle');
-        const fallback = bannerHtml.querySelector('.custom-ad-fallback');
-        let isFilled = false;
-        
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((m) => { 
-                if (m.attributeName === 'data-ad-status' && insTag.getAttribute('data-ad-status') === 'filled') { 
-                    isFilled = true; 
-                    if(fallback) fallback.remove(); 
-                    // Expand banner height from 45px to full 90px when Google ad arrives
-                    bannerHtml.classList.add('banner-filled');
-                } 
-            });
-        });
-        observer.observe(insTag, { attributes: true });
-        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
-
-        // 10-Second Rule: If Google Ad doesn't fill within 10s, completely destroy the wrapper to reclaim space
-        setTimeout(() => {
-            if (!isFilled) { 
-                observer.disconnect(); 
-                wrapper.remove(); // Unloads wrapper from DOM completely
-            }
-        }, 10000);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        initializeSidebarAd();
-        mountVolatileBanner('topAdWrapper', '1577347061', 'top-ad-banner');
-        mountVolatileBanner('bottomAdWrapper', '9541440879', 'bottom-ad-banner');
-    });
 </script>
 
 
 <script>
+document.querySelectorAll('.nav-btn').forEach(function (b) { var t = b.querySelector('.text').textContent.trim(); b.setAttribute('aria-label', t); b.title = t; b.querySelector('.icon').setAttribute('aria-hidden', 'true'); });
+document.querySelector('.nav-btn.active').setAttribute('aria-current', 'page');
 // Deep links: portal/#ahtcalc opens that tool, portal/#report1 opens that report.
 (function () {
     var h = location.hash.replace('#', '');
