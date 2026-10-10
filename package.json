@@ -1,0 +1,23 @@
+{
+  "name": "agent-desk",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Agent Desk: free tools and Power BI reports for contact-centre agents. Static site, vanilla HTML/CSS/JS, zero runtime dependencies.",
+  "scripts": {
+    "build": "node build.mjs",
+    "preflight": "node scripts/preflight.mjs dist",
+    "links": "node scripts/check-links.mjs dist",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run build && npm run preflight && npm run links && npm test",
+    "browser": "node scripts/browser-check.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0",
+    "puppeteer-core": "^25.12.0",
+    "@sparticuz/chromium": "^153.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Desk site configuration",
+  "type": "object",
+  "required": ["name", "url", "updated", "contact", "adsense", "reports"],
+  "properties": {
+    "name": { "type": "string" },
+    "tagline": { "type": "string" },
+    "url": { "type": "string", "format": "uri", "description": "Production origin with no trailing slash. Used for canonical links and the sitemap." },
+    "updated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Default last-updated date for pages that do not set their own." },
+    "author": { "type": "object", "properties": { "name": { "type": "string", "description": "Shown as the byline. Leave empty to show the site name." }, "role": { "type": "string" } } },
+    "contact": { "type": "object", "required": ["email"], "properties": { "email": { "type": "string", "format": "email" } } },
+    "adsense": {
+      "type": "object", "required": ["publisherId", "stage"],
+      "properties": {
+        "publisherId": { "type": "string", "pattern": "^ca-pub-\\d+$" },
+        "stage": { "enum": [0, 1], "description": "0 = before approval: the loader appears only on the home page and no ad units render. 1 = after approval: the loader appears on content pages and ad slots render where a slot id is set. Never on /portal/." },
+        "slots": { "type": "object", "properties": { "inArticle": { "type": "string", "description": "Data-ad-slot id of a responsive display unit created in AdSense." } } }
+      }
+    },
+    "reports": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["id", "hash", "title", "url", "summary"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "hash": { "type": "string", "description": "Deep link used by /portal/#hash. Keep the original values (report1, report2, report5)." },
+          "title": { "type": "string" },
+          "url": { "type": "string", "pattern": "^https://app\\.powerbi\\.com/" },
+          "summary": { "type": "string" },
+          "audience": { "type": "string", "description": "Optional. Who the report is for. Shown in the facts panel when set." },
+          "cadence": { "type": "string", "description": "Optional. How often the data refreshes, for example 'Daily by 9:00 AM Manila time'." },
+          "refreshed": { "type": "string", "description": "Optional. Date the data was last refreshed (YYYY-MM-DD)." },
+          "snapshot": { "type": "string", "description": "Optional. Path to a screenshot in src/static/img, for example /img/champion-challenger.png. Make sure it contains no personal or client data." },
+          "snapshotAlt": { "type": "string", "description": "Required when snapshot is set: one sentence stating the takeaway the image shows." }
+        }
+      }
+    }
+  }
+}

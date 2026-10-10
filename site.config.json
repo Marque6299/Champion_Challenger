@@ -1,0 +1,58 @@
+{
+  "name": "Agent Desk",
+  "tagline": "Free tools and Power BI reports for contact-centre agents",
+  "url": "https://overwatchcc.netlify.app",
+  "updated": "2026-10-05",
+  "author": {
+    "name": "",
+    "role": "Operations and reporting analyst"
+  },
+  "contact": {
+    "email": "jm.me6299@gmail.com"
+  },
+  "adsense": {
+    "publisherId": "ca-pub-6978764838614552",
+    "stage": 0,
+    "slots": {
+      "inArticle": ""
+    }
+  },
+  "reports": [
+    {
+      "id": "champion-challenger",
+      "hash": "report1",
+      "title": "Champion Challenger",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiOWM5YzhhNDgtYTM1YS00ZWU0LWI2MjEtNzEzMzYwZGJkYzFmIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D",
+      "summary": "A side-by-side performance comparison, built for reading the gap between a current approach and an alternative.",
+      "audience": "",
+      "cadence": "",
+      "refreshed": "",
+      "snapshot": "",
+      "snapshotAlt": ""
+    },
+    {
+      "id": "productivity",
+      "hash": "report2",
+      "title": "Productivity Report",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiZWUwNDVmMjktZWVjNC00ZDQwLTlhMDctYjhjNzgzOGRmNWYyIiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D",
+      "summary": "Handle time, occupancy and the other measures of how agent time is spent.",
+      "audience": "",
+      "cadence": "",
+      "refreshed": "",
+      "snapshot": "",
+      "snapshotAlt": ""
+    },
+    {
+      "id": "get-agent-performance",
+      "hash": "report5",
+      "title": "GET Agent Performance",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiODgxNTAyOWEtMDY3Yy00YTYyLWJlZGEtZjRiMjM0NzE5OTM3IiwidCI6IjIzZjhlY2ZiLTZhOTAtNDZjMi05NmNhLTRhMzYyNzIxYjgyYyIsImMiOjEwfQ%3D%3D",
+      "summary": "Agent-level quality and outcome measures, for coaching conversations and trend reading.",
+      "audience": "",
+      "cadence": "",
+      "refreshed": "",
+      "snapshot": "",
+      "snapshotAlt": ""
+    }
+  ]
+}

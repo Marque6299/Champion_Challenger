@@ -1,0 +1,43 @@
+# netlify.toml - build, redirects and headers for Agent Desk.
+[build]
+  command = "node build.mjs && node scripts/preflight.mjs dist"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Old URLs from the first version of the site. Keep these permanently.
+[[redirects]]
+  from = "/how-it-works.html"
+  to = "/guides/how-it-works/"
+  status = 301
+[[redirects]]
+  from = "/about.html"
+  to = "/about/"
+  status = 301
+[[redirects]]
+  from = "/contact.html"
+  to = "/contact/"
+  status = 301
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+
+# The workspace is for people, not search results. Do NOT block it in robots.txt:
+# crawlers must be able to fetch it to see the noindex.
+[[headers]]
+  for = "/portal/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

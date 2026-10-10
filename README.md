@@ -1,18 +1,40 @@
-# Agent Desk (Champion_Challenger)
+# Agent Desk
 
-Static site for Netlify (`overwatchcc.netlify.app`): free agent tools, Power BI reports, and the `/portal/` workspace.
+Free tools and Power BI reports for contact-centre agents, with eight extra tools for travel and lodging teams (guest and B2B work).
+A static site in plain HTML, CSS and JavaScript. No framework, no runtime dependencies, nothing you type leaves the browser.
 
-## What changed (2026-10-04 upgrade pass)
-- **Portal is ad-free**: all ad units, the AdSense loader, the invented "house ads" and the 10-second removal timer are gone from `/portal/`.
-- **AdSense loader only on `index.html`** (verification). Add it elsewhere only after the site is approved and each page has real content.
-- **Real content pages**: `how-it-works.html` is now a full guide (anchors exist, screenshots have dimensions); `about.html` is distinct.
-- **Placeholders fixed**: `[Your name]`, `yourdomain.com`, the `neflify.app` canonicals, the empty `mailto:` link.
-- **Legal pages** rebuilt inside the site layout, renamed to Agent Desk, and the cookie/privacy text now matches what the site does.
-- **Portal accessibility and layout**: labels, `main`, `h1`, frame title, `aria-current`, visible focus, contrast fixes, phone drawer under 900 px, report-frame loading/slow/retry states, guarded storage.
-- **Guardrail**: `node scripts/preflight.mjs` (also runs in GitHub Actions) fails on placeholders, bad canonicals, ad code in the portal, duplicate pages, dead anchors and images without dimensions.
+- **Public pages** (`/`, `/reports/`, `/tools/`, `/guides/`, `/glossary/`, legal pages): written content plus each tool and report, indexable, the only place ads may ever appear.
+- **Workspace** (`/portal/`): the original sidebar-and-report layout, dark glass by default, no ads, `noindex`.
+- **15 tools**, **3 Power BI reports**, **5 guides**, **64 glossary terms**.
 
-## Before you request AdSense review
-1. Confirm the three Power BI embeds are cleared for public release (they use Publish to web links).
-2. In AdSense, check Policy center for example URLs and turn Auto ads off for this site.
-3. Add a consent management platform for EEA, UK and Swiss visitors.
-4. Retake the tool screenshots in `img/` (they show the old portal look).
+## Quick start
+
+```bash
+npm install          # only needed for tests and the browser check
+npm run build        # writes dist/
+npm run check        # build + preflight + link check + all tests
+npm run browser      # real-Chromium check (needs the optional dev dependencies)
+```
+
+Deploy: connect the repo to Netlify. `netlify.toml` already sets the build command (`node build.mjs && node scripts/preflight.mjs dist`) and publish folder (`dist`). The deploy fails if any AdSense-readiness rule is broken. See [docs/DEPLOY.md](docs/DEPLOY.md).
+
+## Where things live
+
+| Path | What it is |
+|------|------------|
+| `site.config.json` | Name, URL, contact, author, AdSense stage and slot, the three report URLs and their optional facts. Schema: `site.config.schema.json` |
+| `src/content/**/*.md` | Every page's text, with front matter. Edit these to change the site |
+| `src/assets/js/tools/*.js` | The 15 tools, one module each. `src/assets/js/meta.js` lists them |
+| `src/assets/js/lib/*.js` | The tested logic behind the tools: time zones, money, cancellation, commission, groups, CSV, names, card-number check |
+| `src/tokens.mjs` | The design tokens, light and dark. `tokens.css` is generated from it |
+| `build.mjs`, `scripts/` | Generator, preflight gate, link checker, contrast gate, browser check |
+| `tests/` | 45 automated tests |
+| `docs/` | Architecture and deployment notes, and screenshots from the browser check |
+
+## Before you publish
+
+1. Set `author.name` in `site.config.json` (preflight warns until you do).
+2. Confirm the public Power BI embeds are cleared for public release. See `docs/DEPLOY.md`, step 1.
+3. Fill in `audience`, `cadence` and `refreshed` for each report if you want the facts panel to show them.
+
+Font files are SIL Open Font License (see `src/assets/fonts/LICENSE-*.txt`).
